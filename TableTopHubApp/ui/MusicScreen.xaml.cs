@@ -57,10 +57,16 @@ namespace TableTopHubApp
             this.parentRef = appRef;
         }
 
+        /// <summary>
+        /// Event handler for when the main tab of UI is changed.
+        /// </summary>
+        /// <exception cref="Exception">Exception thrown when event is flagged by a non-button.</exception>
         private void ScreenChangeClick(object sender, RoutedEventArgs e)
         {
+            // Ensure that screen is properly reset.
             this.ContentClearAll();
 
+            // Get data on button that flagged event.
             Button sourceButton = new Button();
             if (sender.GetType() == typeof(Button)) 
             {
@@ -71,9 +77,11 @@ namespace TableTopHubApp
                 throw new Exception("Event not raised by button");
             }
 
+            // Hide the current screen.
             this.activeGrid.IsEnabled = false;
             this.activeGrid.Visibility = Visibility.Hidden;
 
+            // Depending on the sender's name, enable correct screen.
             if (sourceButton.Name == "mainScreenButton")
             {
                 this.mainGrid.IsEnabled = true;
@@ -95,16 +103,18 @@ namespace TableTopHubApp
 
                 this.activeGrid = this.statsGrid;
             }
-            else
-            {
-                throw new Exception("Specific button not found");
-            }
         }
 
+        /// <summary>
+        /// Event handler for when the type of content to add is changed.
+        /// </summary>
+        /// <exception cref="Exception">Exception thrown when event is flagged by a non-button.</exception>
         private void AddContentSubScreenChange(object sender, RoutedEventArgs e)
         {
+            // Ensure content screen is properly cleared.
             this.ContentClearAll();
 
+            // Get data on sending button.
             Button sourceButton = new Button();
             if (sender.GetType() == typeof(Button))
             {
@@ -115,9 +125,11 @@ namespace TableTopHubApp
                 throw new Exception("Event not raised by button");
             }
 
+            // Disable old grid.
             this.activeSubGrid.IsEnabled = false;
             this.activeSubGrid.Visibility = Visibility.Hidden;
 
+            // Enable new screen based off button info.
             if(sourceButton.Name == "addContentButton")
             {
                 this.addContentSubGrid.IsEnabled = true;
@@ -149,7 +161,6 @@ namespace TableTopHubApp
             this.activeSubSubGrid.Visibility = Visibility.Hidden;
 
             this.ContentClearAll();
-
 
             if (selected == "System.Windows.Controls.ComboBoxItem: music")
             {
@@ -640,7 +651,6 @@ namespace TableTopHubApp
                 return;
             }
 
-
             FileManager.CopyFile("map");
             FileManager.AddData("map", data);
             this.ContentClearAll();
@@ -678,7 +688,7 @@ namespace TableTopHubApp
 
         private void EnableOverlayClick(object sender, RoutedEventArgs e)
         {
-            if (this.overlayOptions.SelectedValue != null)
+            if (this.overlayOptions.SelectedValue != null && App.OverlayRunning)
             {
                 App.OverlayTab.EnableOverlayElement(this.overlayOptions.SelectedValue.ToString() !);
             }
@@ -686,17 +696,22 @@ namespace TableTopHubApp
 
         private void DisableOverlayClick(object sender, RoutedEventArgs e)
         {
-            App.OverlayTab.DisableOverlayElement();
+            if (App.OverlayRunning){
+                App.OverlayTab.DisableOverlayElement();
+            }
         }
 
         private void EditOverlayClick(object sender, RoutedEventArgs e)
         {
-            App.OverlayTab.ChangeWindowState();
+            if (App.OverlayRunning)
+            {
+                App.OverlayTab.ChangeWindowState();
+            }
         }
 
         private void AddIconClick(object sender, RoutedEventArgs e)
         {
-            if (this.iconOptions.SelectedValue != null)
+            if (this.iconOptions.SelectedValue != null && App.BattleRunning)
             {
                 App.BattleTab.AddCreature(this.iconOptions.SelectedValue.ToString()!);
             }
@@ -704,7 +719,7 @@ namespace TableTopHubApp
 
         private void SelectMapClick(object sender, RoutedEventArgs e)
         {
-            if (this.mapOptions.SelectedValue != null)
+            if (this.mapOptions.SelectedValue != null && App.BattleRunning)
             {
                 App.BattleTab.OpenMap(this.mapOptions.SelectedValue.ToString()!);
             }

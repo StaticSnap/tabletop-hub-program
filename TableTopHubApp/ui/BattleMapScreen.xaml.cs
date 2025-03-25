@@ -11,15 +11,17 @@ namespace TableTopHubApp
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
+    using System.Windows.Media.Media3D;
     using System.Windows.Shapes;
+    using WpfAnimatedGif;
 
     /// <summary>
     /// Interaction logic for BattleMapScreen.xaml.
     /// </summary>
     public partial class BattleMapScreen : Window
     {
-        private Image mapImage = new Image();
         private Grid mapGrid = new Grid();
+        private (string, string) sizeDat = ("0","0");
 
         private bool isDragging = false;
         private Point clickPosition;
@@ -71,71 +73,139 @@ namespace TableTopHubApp
         {
             this.Dispatcher.Invoke(() => 
             {
-                this.canvas.Children.Clear();
-
-                this.mapGrid.Children.Clear();
-
-                this.mapGrid.MouseDown -= this.MapGridMouseDown;
-                this.mapGrid.MouseMove -= this.MapGridMouseMove;
-                this.mapGrid.MouseUp -= this.MapGridMouseUp;
-
-                this.mapGrid = new Grid();
-
-                this.mapGrid.ShowGridLines = false;
-
-                this.mapGrid.MouseDown += this.MapGridMouseDown;
-                this.mapGrid.MouseMove += this.MapGridMouseMove;
-                this.mapGrid.MouseUp += this.MapGridMouseUp;
-
-                this.mapGrid.AllowDrop = true;
-                this.mapGrid.Background = Brushes.Transparent;
-
                 string[] mapData = MapManager.GetMaps()[mapName];
 
-                int width = -1;
-                int height = -1;
-
-                int.TryParse(mapData[2], out width);
-                int.TryParse(mapData[3], out height);
-
-                BitmapImage bitMap = new BitmapImage();
-
-                bitMap.BeginInit();
-                bitMap.UriSource = new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\maps\\", mapData[1]));
-
-                bitMap.DecodePixelHeight = 50 * height;
-                bitMap.DecodePixelWidth = 50 * width;
-
-                bitMap.EndInit();
-
-                this.mapImage.Source = bitMap;
-                this.mapImage.Height = 50 * height;
-                this.mapImage.Width = 50 * width;
-
-                this.mapGrid.Height = 50 * height;
-                this.mapGrid.Width = 50 * width;
-
-                this.mapGrid.ColumnDefinitions.Clear();
-                for (int i = 0; i < width; i++)
+                if (mapData[2] == this.sizeDat.Item1 && mapData[3] == this.sizeDat.Item2)
                 {
-                    ColumnDefinition col = new ColumnDefinition();
-                    this.mapGrid.ColumnDefinitions.Add(col);
-                }
+                    int width = -1;
+                    int height = -1;
 
-                this.mapGrid.RowDefinitions.Clear();
-                for (int i = 0; i < height; i++)
+                    int.TryParse(mapData[2], out width);
+                    int.TryParse(mapData[3], out height);
+
+                    if (MapManager.IsAnimated(mapName))
+                    {
+                        VisualBrush brush = new VisualBrush();
+
+                        BitmapImage uri = new BitmapImage();
+                        uri.BeginInit();
+
+                        uri.UriSource = new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\maps\\", mapData[1]));
+
+                        uri.EndInit();
+
+                        Image temp = new Image();
+
+                        ImageBehavior.SetAnimatedSource(temp, uri);
+
+                        brush.Visual = temp;
+
+                        this.mapGrid.Background = brush;
+                    }
+                    else
+                    {
+                        BitmapImage bitMap = new BitmapImage();
+
+                        bitMap.BeginInit();
+                        bitMap.UriSource = new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\maps\\", mapData[1]));
+
+                        bitMap.DecodePixelHeight = 50 * height;
+                        bitMap.DecodePixelWidth = 50 * width;
+
+                        bitMap.EndInit();
+
+                        ImageBrush brush = new ImageBrush();
+                        brush.ImageSource = bitMap;
+
+                        this.mapGrid.Background = brush;
+                    }
+                }
+                else
                 {
-                    RowDefinition row = new RowDefinition();
-                    this.mapGrid.RowDefinitions.Add(row);
+                    this.canvas.Children.Clear();
+
+                    this.mapGrid.Children.Clear();
+
+                    this.mapGrid.MouseDown -= this.MapGridMouseDown;
+                    this.mapGrid.MouseMove -= this.MapGridMouseMove;
+                    this.mapGrid.MouseUp -= this.MapGridMouseUp;
+
+                    this.mapGrid = new Grid();
+
+                    this.mapGrid.ShowGridLines = false;
+
+                    this.mapGrid.MouseDown += this.MapGridMouseDown;
+                    this.mapGrid.MouseMove += this.MapGridMouseMove;
+                    this.mapGrid.MouseUp += this.MapGridMouseUp;
+
+                    this.mapGrid.AllowDrop = true;
+                    this.mapGrid.Background = Brushes.Transparent;
+
+                    int width = -1;
+                    int height = -1;
+
+                    int.TryParse(mapData[2], out width);
+                    int.TryParse(mapData[3], out height);
+
+                    this.sizeDat.Item1 = mapData[2];
+                    this.sizeDat.Item2 = mapData[3];
+
+                    if (MapManager.IsAnimated(mapName))
+                    {
+                        VisualBrush brush = new VisualBrush();
+
+                        BitmapImage uri = new BitmapImage();
+                        uri.BeginInit();
+
+                        uri.UriSource = new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\maps\\", mapData[1]));
+
+                        uri.EndInit();
+
+                        Image temp = new Image();
+
+                        ImageBehavior.SetAnimatedSource(temp, uri);
+
+                        brush.Visual = temp;
+
+                        this.mapGrid.Background = brush;
+                    }
+                    else
+                    {
+                        BitmapImage bitMap = new BitmapImage();
+
+                        bitMap.BeginInit();
+                        bitMap.UriSource = new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\maps\\", mapData[1]));
+
+                        bitMap.DecodePixelHeight = 50 * height;
+                        bitMap.DecodePixelWidth = 50 * width;
+
+                        bitMap.EndInit();
+
+                        ImageBrush brush = new ImageBrush();
+                        brush.ImageSource = bitMap;
+
+                        this.mapGrid.Background = brush;
+                    }
+
+                    this.mapGrid.Height = 50 * height;
+                    this.mapGrid.Width = 50 * width;
+
+                    this.mapGrid.ColumnDefinitions.Clear();
+                    for (int i = 0; i < width; i++)
+                    {
+                        ColumnDefinition col = new ColumnDefinition();
+                        this.mapGrid.ColumnDefinitions.Add(col);
+                    }
+
+                    this.mapGrid.RowDefinitions.Clear();
+                    for (int i = 0; i < height; i++)
+                    {
+                        RowDefinition row = new RowDefinition();
+                        this.mapGrid.RowDefinitions.Add(row);
+                    }
+
+                    this.canvas.Children.Add(this.mapGrid);
                 }
-
-                ImageBrush brush = new ImageBrush();
-                brush.ImageSource = bitMap;
-
-                this.mapGrid.Background = brush;
-
-                //this.canvas.Children.Add(this.mapImage);
-                this.canvas.Children.Add(this.mapGrid);
             });
         }
 
@@ -148,6 +218,11 @@ namespace TableTopHubApp
             {
                 this.Close();
             });
+        }
+
+        private void BattleMapClosing(object sender, CancelEventArgs e)
+        {
+            App.BattleRunning = false;
         }
 
         // MouseDown event to start the drag

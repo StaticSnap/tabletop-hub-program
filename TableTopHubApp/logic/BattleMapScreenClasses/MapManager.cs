@@ -33,7 +33,7 @@ namespace TableTopHubApp
             for (int i = 0; i < mapContent.Length; i++)
             {
                 string[] split = mapContent[i].Split(',');
-                Maps[split[0]] = [split[0], split[1], split[2], split[3]];
+                Maps[split[0]] = [split[0], split[1], split[2], split[3],split[4]];
             }
 
             Maps.TrimExcess();
@@ -75,7 +75,11 @@ namespace TableTopHubApp
         /// <returns>true for gif, false for png.</returns>
         public static bool IsAnimated(string name)
         {
-            if (Icons[name][2] == "ANIMATED")
+            if (Icons.ContainsKey(name) && Icons[name][2] == "ANIMATED")
+            {
+                return true;
+            }
+            else if(Maps.ContainsKey(name) && Maps[name][4] == "ANIMATED")
             {
                 return true;
             }

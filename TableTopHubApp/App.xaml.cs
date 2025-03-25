@@ -21,6 +21,10 @@ namespace TableTopHubApp
         private static Thread battleThread;
         private static Thread overlayThread;
 
+        private static bool musicRunning;
+        private static bool battleRunning;
+        private static bool overlayRunning;
+
 
         /// <summary>
         /// Gets or sets the music tab.
@@ -49,6 +53,24 @@ namespace TableTopHubApp
             set => overlayTab = value;
         }
 
+        public static bool MusicRunning
+        {
+            get => musicRunning;
+            set => musicRunning = value;
+        }
+
+        public static bool BattleRunning
+        {
+            get => battleRunning;
+            set => battleRunning = value;
+        }
+
+        public static bool OverlayRunning
+        {
+            get => overlayRunning;
+            set => overlayRunning = value;
+        }
+
         /// <summary>
         /// Method called by other windows to ensure app actually stops running on close.
         /// </summary>
@@ -65,6 +87,7 @@ namespace TableTopHubApp
             if (battleThread.IsAlive)
             {
                 battleTab.CloseWindow();
+                battleRunning = false;
             }
         }
 
@@ -73,6 +96,7 @@ namespace TableTopHubApp
             if (overlayThread.IsAlive)
             {
                 overlayTab.CloseWindow();
+                overlayRunning = false;
             }
         }
 
@@ -100,6 +124,7 @@ namespace TableTopHubApp
         private void StartMusicWindow()
         {
             musicTab = new MusicScreen(this);
+            musicRunning = true;
             this.Dispatcher.Invoke(() =>
             {
                 Current.MainWindow = musicTab;
@@ -110,12 +135,14 @@ namespace TableTopHubApp
         private void StartBattleWindow()
         {
             battleTab = new BattleMapScreen();
+            battleRunning = true;
             battleTab.ShowDialog();
         }
 
         private void StartOverlayWindow()
         {
             overlayTab = new OverlayScreen();
+            overlayRunning = true;
             overlayTab.ShowDialog();
         }
     }

@@ -6,6 +6,7 @@ namespace TableTopHubApp
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.Linq;
     using System.Text;
@@ -153,6 +154,19 @@ namespace TableTopHubApp
             }
         }
 
+        /// <summary>
+        /// Tells App that the window has been closed so no functions are called on it.
+        /// </summary>
+        private void OverlayScreenClosing(object sender, CancelEventArgs e)
+        {
+            App.OverlayRunning = false;
+        }
+
+        /// <summary>
+        /// Reads the image data and puts the image on the overlay.
+        /// </summary>
+        /// <param name="imageDat">String of data required to open image.</param>
+        /// <exception cref="Exception">I haven't written the greenscreen.</exception>
         private void EnableImage(string[] imageDat)
         {
             Image overlay = new Image();
@@ -179,6 +193,10 @@ namespace TableTopHubApp
             }
         }
 
+        /// <summary>
+        /// Reads the video data and begins playback.
+        /// </summary>
+        /// <param name="videoDat">Data to open videos.</param>
         private void EnableVideo(string[] videoDat)
         {
             //makes sure that spamming start video doesn't stack events.
@@ -190,13 +208,11 @@ namespace TableTopHubApp
                 // video has no green screen.
                 if(videoDat[4] == "NULL")
                 {
-
                 }
 
                 // video uses a green screen.
                 else
                 {
-
                 }
             }
 
@@ -221,14 +237,13 @@ namespace TableTopHubApp
                 //video uses a green screen.
                 else
                 {
-
                 }
             }
         }
 
         private void EnableGif(string[] gifDat)
         {
-
+            // TODO
         }
 
         private void OverlayMouseMove(object sender, MouseEventArgs e)

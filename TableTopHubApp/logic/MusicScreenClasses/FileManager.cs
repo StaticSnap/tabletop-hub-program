@@ -50,7 +50,8 @@ namespace TableTopHubApp
         /// </summary>
         public static void EnsurePathways()
         {
-            if(!Path.Exists(Path.Combine(Directory.GetCurrentDirectory(), "resources"))){
+            if(!Path.Exists(Path.Combine(Directory.GetCurrentDirectory(), "resources")))
+            {
                 Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "resources"));
             }
 
@@ -133,7 +134,6 @@ namespace TableTopHubApp
                 {
                 }
             }
-
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace TableTopHubApp
             }
             else if(type == "map")
             {
-                dialog.Filter = "Image Files|*.bmp;*.jpeg;*.jpg;*.png";
+                dialog.Filter = "Image Files|*.bmp;*.jpeg;*.jpg;*.png;*.gif";
             }
             else
             {

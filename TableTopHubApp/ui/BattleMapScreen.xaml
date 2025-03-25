@@ -5,9 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TableTopHubApp"
         mc:Ignorable="d"
-        Title="BattleMapScreen" Height="900" Width="1600">
+        Title="BattleMapScreen" Height="900" Width="1600"
+        Closing="BattleMapClosing"
+        >
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-        <local:PanAndZoomCanvas x:Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <local:PanAndZoomCanvas x:Name="canvas">
             
         </local:PanAndZoomCanvas>
     </Grid>

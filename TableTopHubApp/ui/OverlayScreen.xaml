@@ -9,6 +9,7 @@
         AllowsTransparency="True" WindowStyle="None"
         MouseMove="OverlayMouseMove"
         ShowInTaskbar="False"
+        Closing="OverlayScreenClosing"
         >
     <Grid Name="grid">
         <Grid.RowDefinitions>

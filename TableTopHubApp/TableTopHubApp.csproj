@@ -6,6 +6,9 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <PackageIcon>new_project.png</PackageIcon>
+    <ApplicationIcon>table tools icon.ico</ApplicationIcon>
+    <AssemblyName>Table Tools</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +17,17 @@
 
   <ItemGroup>
     <AdditionalFiles Include="ui\stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="table tools icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\Users\tyler\OneDrive\Desktop\new_project.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
