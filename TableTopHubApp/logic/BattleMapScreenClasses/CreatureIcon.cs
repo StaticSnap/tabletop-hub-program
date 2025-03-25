@@ -20,6 +20,7 @@ namespace TableTopHubApp
         private VisualBrush iconGif = new VisualBrush();
         private Ellipse fullIcon = new Ellipse();
         private string iconName = string.Empty;
+        private Creature stats;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatureIcon"/> class.
@@ -61,6 +62,9 @@ namespace TableTopHubApp
 
                 this.fullIcon.Fill = this.iconImage;
             }
+
+            string[] tempStats = MapManager.GetCreatureStats(iconName);
+            this.stats = new Creature(tempStats[0], tempStats[1], tempStats[2], int.Parse(tempStats[3]));
         }
 
         /// <summary>
@@ -88,6 +92,19 @@ namespace TableTopHubApp
         public int GetIconHeight()
         {
             return MapManager.GetIconHeight(this.iconName);
+        }
+
+        public string[] GetStats()
+        {
+            string[] formattedStats = [];
+
+            formattedStats[0] = this.stats.Name;
+            formattedStats[1] = this.stats.Stats;
+            formattedStats[2] = this.stats.Actions;
+            formattedStats[3] = this.stats.MaxHP.ToString();
+            formattedStats[4] = this.stats.CurHP.ToString();
+
+            return formattedStats;
         }
     }
 }

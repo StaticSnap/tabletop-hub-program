@@ -35,7 +35,7 @@
             <Button Grid.Column="2" x:Name="statsScreenButton" Margin="20" Click="ScreenChangeClick" Content="Stats Screen"></Button>
         </Grid>
 
-        <Grid Grid.Row="1" x:Name="mainGrid" IsEnabled="True" Visibility="Visible">
+        <Grid Grid.Row="1" x:Name="mainGrid" IsEnabled="False" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -546,7 +546,31 @@
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="1" x:Name="statsGrid" IsEnabled="False" Visibility="Hidden"></Grid>
+        <Grid Grid.Row="1" x:Name="statsGrid" IsEnabled="True" Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="8*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="13*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="6*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </Grid>
     </Grid>
     
 </Window>

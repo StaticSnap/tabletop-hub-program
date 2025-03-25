@@ -28,6 +28,10 @@ namespace TableTopHubApp
         private UIElement? draggedElement = null;  // This will hold the dragged control
         private UIElement? selectedElement = null; // This stores the currently selected control
 
+        public delegate void ElementChangedEventHandler(object sender, EventArgs e);
+
+        public event ElementChangedEventHandler ElementSelected;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BattleMapScreen"/> class.
         /// </summary>
@@ -245,6 +249,8 @@ namespace TableTopHubApp
                     this.draggedElement.CaptureMouse();  // Capture mouse to the control
 
                     this.selectedElement = element;
+
+                    this.ElementSelected.Invoke(this, EventArgs.Empty);
                 }
             }
         }
