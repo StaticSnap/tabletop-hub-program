@@ -569,6 +569,29 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
+
+
+                <TextBlock Grid.Row="1" Grid.Column="0"  Name="statsGridCreatureStats" Background="Beige" TextWrapping="Wrap" FontSize="40"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="0" Name="statsGridCreatureName" Background="Beige" Margin="10" TextAlignment="Center" FontSize="40"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="1" Name="statsGridCreatureAbilities" Background="Beige" Margin="10" TextWrapping="Wrap" FontSize="40"></TextBlock>
+
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="1" Name="statsGridCreatureCurrentHealth" Background="Beige" BorderBrush="Gray" BorderThickness="1" Margin="10" TextChanged="CurrentHealthChanged" FontSize="40" TextAlignment="Center"></TextBox>
+                    <Viewbox Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Background="Beige" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Text="/"></TextBlock>
+                    </Viewbox>
+                    <TextBlock Grid.Column="3" Name="statsGridCreatureMaxHealth" Background="Beige" Margin="10" FontSize="40" TextAlignment="Center"></TextBlock>
+                    
+                </Grid>
+                
             </Grid>
         </Grid>
     </Grid>
