@@ -40,7 +40,9 @@ namespace TableTopHubApp
             this.musicOptions.ItemsSource = AudioManager.GetTrackTitles();
             this.musicOptions.SelectedIndex = 0;
 
-            this.soundOptions.ItemsSource = AudioManager.GetSoundTitles();
+            this.soundOptions.ItemsSource = AudioManager.GetSoundEffects();
+            this.soundOptions.DisplayMemberPath = "Name";
+            this.soundOptions.SelectedValuePath = "Id";
             this.soundOptions.SelectedIndex = 0;
 
             this.overlayOptions.ItemsSource = OverlayManager.GetOverlayTitles();
@@ -429,7 +431,11 @@ namespace TableTopHubApp
             this.ContentClearAll();
             this.addContentSoundConfirmFeedback.Text = "Successfully added!";
             AudioManager.InitTracks();
-            this.soundOptions.ItemsSource = AudioManager.GetSoundTitles();
+
+            this.soundOptions.ItemsSource = StorageManager.GetAllEntries();
+            this.soundOptions.DisplayMemberPath = "Name";
+            this.soundOptions.SelectedValuePath = "Id";
+            this.soundOptions.SelectedIndex = 0;
             this.soundOptions.SelectedIndex = 0;
         }
 

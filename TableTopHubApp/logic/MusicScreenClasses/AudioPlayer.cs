@@ -241,16 +241,16 @@ namespace TableTopHubApp
             }
         }
 
-        private static void PlaySoundEffect(string title)
+        private static void PlaySoundEffect(string id)
         {
-            string soundeffectPath = AudioManager.GetSoundEffectPath(title);
+            string soundEffectPath = AudioManager.GetSoundEffectPath(id);
 
             if (soundEffect.Status == SoundStatus.Playing)
             {
                 soundEffect.Stop();
             }
 
-            soundEffect = new Sound(new SoundBuffer(soundeffectPath));
+            soundEffect = new Sound(new SoundBuffer(soundEffectPath));
 
             soundEffect.Volume = soundeffectVolume;
 

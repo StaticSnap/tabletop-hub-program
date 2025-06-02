@@ -19,7 +19,8 @@ namespace TableTopHubApp
         // dictionary containing name -> [intro file name, loop file name]
         private static readonly Dictionary<string, string[]> Tracks = new Dictionary<string, string[]>();
 
-        private static readonly Dictionary<string, string> SoundEffects = new Dictionary<string, string>();
+        //private static readonly Dictionary<string, string> SoundEffects = new Dictionary<string, string>();
+        private static List<ManifestEntry> manifestSounds = StorageManager.GetAllEntries();
 
         /// <summary>
         /// Opens the data files and fills the dictionaries with data pertaining to the tracks and sounds.
@@ -27,7 +28,7 @@ namespace TableTopHubApp
         public static void InitTracks()
         {
             Tracks.Clear();
-            SoundEffects.Clear();
+            manifestSounds = StorageManager.GetAllEntries();
 
             string[] musicContent = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\Tracklist.txt"));
 
@@ -39,18 +40,21 @@ namespace TableTopHubApp
 
             Tracks.TrimExcess();
 
-            string[] soundEffectContent = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\SoundEffectList.txt"));
 
-            for (int i = 0; i < soundEffectContent.Length; i++)
-            {
-                string[] split = soundEffectContent[i].Split(',');
-                if(split.Length > 1)
-                {
-                    SoundEffects[split[0]] = split[1];
-                }
-            }
 
-            SoundEffects.TrimExcess();
+
+            //string[] soundEffectContent = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\SoundEffectList.txt"));
+
+            //for (int i = 0; i < soundEffectContent.Length; i++)
+            //{
+            //    string[] split = soundEffectContent[i].Split(',');
+            //    if(split.Length > 1)
+            //    {
+            //        SoundEffects[split[0]] = split[1];
+            //    }
+            //}
+
+            //SoundEffects.TrimExcess();
         }
 
         /// <summary>
@@ -60,15 +64,6 @@ namespace TableTopHubApp
         public static List<string> GetTrackTitles()
         {
             return Tracks.Keys.ToList();
-        }
-
-        /// <summary>
-        /// Gets the list of sound effect names for UI.
-        /// </summary>
-        /// <returns>List of string sound effects.</returns>
-        public static List<string> GetSoundTitles()
-        {
-            return SoundEffects.Keys.ToList();
         }
 
         /// <summary>
@@ -84,9 +79,9 @@ namespace TableTopHubApp
         /// Gets the dictionary of sound effects containing all data on a sound.
         /// </summary>
         /// <returns>Dictionary of sound effect titles to data.</returns>
-        public static Dictionary<string, string> GetSoundEffects()
+        public static List<ManifestEntry> GetSoundEffects()
         {
-            return SoundEffects;
+            return manifestSounds;
         }
 
         /// <summary>
@@ -120,16 +115,16 @@ namespace TableTopHubApp
         /// <param name="soundEffectTitle">name of the sound.</param>
         /// <returns>formatted file path.</returns>
         /// <exception cref="Exception">if given a name that the manager does not recognize. throw an exception.</exception>
-        public static string GetSoundEffectPath(string soundEffectTitle)
+        public static string GetSoundEffectPath(string soundEffectID)
         {
-            if (SoundEffects.ContainsKey(soundEffectTitle))
+            SoundEffect? soundData = StorageManager.LoadObject(soundEffectID);
+
+            if (soundData == null)
             {
-                return Path.Combine(Directory.GetCurrentDirectory(), "resources\\soundEffectsFolder", SoundEffects[soundEffectTitle]);
+                throw new Exception("sound not found");
             }
-            else
-            {
-                throw new Exception("No sound effect with that title found");
-            }
+
+            return Path.Combine(Directory.GetCurrentDirectory(), "resources\\soundEffectsFolder\\", soundData.FilePath);
         }
     }
 }

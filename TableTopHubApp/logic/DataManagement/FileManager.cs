@@ -121,13 +121,6 @@ namespace TableTopHubApp
                 }
             }
 
-            if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\SoundEffectList.txt")))
-            {
-                using (FileStream fs = File.Create(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\SoundEffectList.txt")))
-                {
-                }
-            }
-
             if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\TrackList.txt")))
             {
                 using (FileStream fs = File.Create(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\TrackList.txt")))
@@ -309,6 +302,10 @@ namespace TableTopHubApp
             else if (type == "sound")
             {
                 currentFilePath = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\SoundEffectList.txt");
+
+                SoundEffect newSound = new SoundEffect { Name = data[0], FilePath = data[1] };
+                StorageManager.SaveObject(newSound);
+                return;
             }
             else if (type == "icon")
             {
