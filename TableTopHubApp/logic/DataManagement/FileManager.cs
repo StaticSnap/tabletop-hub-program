@@ -99,41 +99,6 @@ namespace TableTopHubApp
             {
                 Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\overlays"));
             }
-
-            if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\IconList.txt")))
-            {
-                using (FileStream fs = File.Create(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\IconList.txt")))
-                { 
-                }
-            }
-
-            if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\MapList.txt")))
-            {
-                using (FileStream fs = File.Create(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\MapList.txt")))
-                {
-                }
-            }
-
-            if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\OverlayList.txt")))
-            {
-                using (FileStream fs = File.Create(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\OverlayList.txt")))
-                {
-                }
-            }
-
-            if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\SoundEffectList.txt")))
-            {
-                using (FileStream fs = File.Create(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\SoundEffectList.txt")))
-                {
-                }
-            }
-
-            if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\TrackList.txt")))
-            {
-                using (FileStream fs = File.Create(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\TrackList.txt")))
-                {
-                }
-            }
         }
 
         /// <summary>
@@ -188,7 +153,7 @@ namespace TableTopHubApp
         }
 
         /// <summary>
-        /// Second version of the open file method used for only the intor file as you need tyo store two files.
+        /// Second version of the open file method used for only the intro file as you need to store two files.
         /// </summary>
         /// <returns>true if successful.</returns>
         public static bool OpenIntroFile()
@@ -304,11 +269,15 @@ namespace TableTopHubApp
         {
             if (type == "music")
             {
-                currentFilePath = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\TrackList.txt");
+                Track newTrack = new Track { Name = data[0], LoopPath = data[1], IntroPath = data[2] };
+                StorageManager.SaveObject(newTrack);
+                return;
             }
             else if (type == "sound")
             {
-                currentFilePath = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\SoundEffectList.txt");
+                SoundEffect newSound = new SoundEffect { Name = data[0], FilePath = data[1] };
+                StorageManager.SaveObject(newSound);
+                return;
             }
             else if (type == "icon")
             {
@@ -320,7 +289,16 @@ namespace TableTopHubApp
             }
             else if (type == "map")
             {
-                currentFilePath = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\MapList.txt");
+
+                Map newMap = new Map { Name = data[0], FilePath = data[1], Width = data[2], Height = data[3] };
+
+                if(Path.GetExtension(newMap.FilePath) == ".gif")
+                {
+                    newMap.Type = "ANIMATED";
+                }
+
+                StorageManager.SaveObject(newMap);
+                return;
             }
             else
             {

@@ -25,7 +25,6 @@ namespace TableTopHubApp
         private static bool battleRunning;
         private static bool overlayRunning;
 
-
         /// <summary>
         /// Gets or sets the music tab.
         /// </summary>
@@ -107,6 +106,8 @@ namespace TableTopHubApp
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            StorageManager.Init();
 
             musicThread = new Thread(this.StartMusicWindow);
             musicThread.SetApartmentState(ApartmentState.STA);

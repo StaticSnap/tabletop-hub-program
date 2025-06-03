@@ -89,29 +89,29 @@ namespace TableTopHubApp
         /// <summary>
         /// take a map name and open it for use.
         /// </summary>
-        /// <param name="mapName">name of the map.</param>
-        public void OpenMap(string mapName)
+        /// <param name="mapId">name of the map.</param>
+        public void OpenMap(string mapId)
         {
             this.Dispatcher.Invoke(() => 
-            {
-                string[] mapData = MapManager.GetMaps()[mapName];
+            { 
+                Map map = MapManager.GetMap(mapId);
 
-                if (mapData[2] == this.sizeDat.Item1 && mapData[3] == this.sizeDat.Item2)
+                if (map.Width == this.sizeDat.Item1 && map.Height == this.sizeDat.Item2)
                 {
                     int width = -1;
                     int height = -1;
 
-                    int.TryParse(mapData[2], out width);
-                    int.TryParse(mapData[3], out height);
+                    int.TryParse(map.Width, out width);
+                    int.TryParse(map.Height, out height);
 
-                    if (MapManager.IsAnimated(mapName))
+                    if (map.Type == "ANIMATED")
                     {
                         VisualBrush brush = new VisualBrush();
 
                         BitmapImage uri = new BitmapImage();
                         uri.BeginInit();
 
-                        uri.UriSource = new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\maps\\", mapData[1]));
+                        uri.UriSource = new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\maps\\", map.FilePath));
 
                         uri.EndInit();
 
@@ -128,7 +128,7 @@ namespace TableTopHubApp
                         BitmapImage bitMap = new BitmapImage();
 
                         bitMap.BeginInit();
-                        bitMap.UriSource = new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\maps\\", mapData[1]));
+                        bitMap.UriSource = new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\maps\\", map.FilePath));
 
                         bitMap.DecodePixelHeight = 50 * height;
                         bitMap.DecodePixelWidth = 50 * width;
@@ -165,20 +165,20 @@ namespace TableTopHubApp
                     int width = -1;
                     int height = -1;
 
-                    int.TryParse(mapData[2], out width);
-                    int.TryParse(mapData[3], out height);
+                    int.TryParse(map.Width, out width);
+                    int.TryParse(map.Height, out height);
 
-                    this.sizeDat.Item1 = mapData[2];
-                    this.sizeDat.Item2 = mapData[3];
+                    this.sizeDat.Item1 = map.Width;
+                    this.sizeDat.Item2 = map.Height;
 
-                    if (MapManager.IsAnimated(mapName))
+                    if (map.Type == "ANIMATED")
                     {
                         VisualBrush brush = new VisualBrush();
 
                         BitmapImage uri = new BitmapImage();
                         uri.BeginInit();
 
-                        uri.UriSource = new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\maps\\", mapData[1]));
+                        uri.UriSource = new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\maps\\", map.FilePath));
 
                         uri.EndInit();
 
@@ -195,7 +195,7 @@ namespace TableTopHubApp
                         BitmapImage bitMap = new BitmapImage();
 
                         bitMap.BeginInit();
-                        bitMap.UriSource = new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\maps\\", mapData[1]));
+                        bitMap.UriSource = new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\maps\\", map.FilePath));
 
                         bitMap.DecodePixelHeight = 50 * height;
                         bitMap.DecodePixelWidth = 50 * width;
