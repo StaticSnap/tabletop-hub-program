@@ -37,7 +37,9 @@ namespace TableTopHubApp
             OverlayManager.InitAssets();
             AudioPlayer audioPlayer = new AudioPlayer();
 
-            this.musicOptions.ItemsSource = AudioManager.GetTrackTitles();
+            this.musicOptions.ItemsSource = AudioManager.GetTracks();
+            this.musicOptions.DisplayMemberPath = "Name";
+            this.musicOptions.SelectedValuePath = "Id";
             this.musicOptions.SelectedIndex = 0;
 
             this.soundOptions.ItemsSource = AudioManager.GetSoundEffects();
@@ -51,7 +53,9 @@ namespace TableTopHubApp
             this.iconOptions.ItemsSource = MapManager.GetIconTitles();
             this.iconOptions.SelectedIndex = 0;
 
-            this.mapOptions.ItemsSource = MapManager.GetMapTitles();
+            this.mapOptions.ItemsSource = MapManager.GetMaps();
+            this.mapOptions.DisplayMemberPath = "Name";
+            this.mapOptions.SelectedValuePath = "Id";
             this.mapOptions.SelectedIndex = 0;
 
             this.activeGrid = this.mainGrid;
@@ -392,7 +396,9 @@ namespace TableTopHubApp
             this.ContentClearAll();
             this.addContentMusicConfirmFeedback.Text = "Successfully added!";
             AudioManager.InitTracks();
-            this.musicOptions.ItemsSource = AudioManager.GetTrackTitles();
+            this.musicOptions.ItemsSource = AudioManager.GetTracks();
+            this.musicOptions.DisplayMemberPath = "Name";
+            this.musicOptions.SelectedValuePath = "Id";
             this.musicOptions.SelectedIndex = 0;
         }
 
@@ -432,7 +438,7 @@ namespace TableTopHubApp
             this.addContentSoundConfirmFeedback.Text = "Successfully added!";
             AudioManager.InitTracks();
 
-            this.soundOptions.ItemsSource = StorageManager.GetAllEntries();
+            this.soundOptions.ItemsSource = StorageManager.GetAllSoundEntries();
             this.soundOptions.DisplayMemberPath = "Name";
             this.soundOptions.SelectedValuePath = "Id";
             this.soundOptions.SelectedIndex = 0;
@@ -662,7 +668,9 @@ namespace TableTopHubApp
             this.ContentClearAll();
             this.addContentMapConfirmFeedback.Text = "Successfully added!";
             MapManager.InitMaps();
-            this.mapOptions.ItemsSource = MapManager.GetMapTitles();
+            this.mapOptions.ItemsSource = MapManager.GetMaps();
+            this.mapOptions.DisplayMemberPath = "Name";
+            this.mapOptions.SelectedValuePath = "Id";
             this.mapOptions.SelectedIndex = 0;
         }
 

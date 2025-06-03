@@ -7,15 +7,13 @@ namespace TableTopHubApp
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Text;
 
     /// <summary>
     /// Manager class to open map and icon data files.
     /// </summary>
     internal static class MapManager
     {
-        //name -> [name,path,x,y]
-        private static readonly Dictionary<string, string[]> Maps = new Dictionary<string, string[]>();
+        private static List<ManifestEntry> manifestMaps = StorageManager.GetAllMapEntries();
 
         //name -> [name,path,animated?]
         private static readonly Dictionary<string, string[]> Icons = new Dictionary<string, string[]>();
@@ -25,18 +23,8 @@ namespace TableTopHubApp
         /// </summary>
         public static void InitMaps()
         {
-            Maps.Clear();
+            manifestMaps = StorageManager.GetAllMapEntries();
             Icons.Clear();
-
-            string[] mapContent = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\MapList.txt"));
-
-            for (int i = 0; i < mapContent.Length; i++)
-            {
-                string[] split = mapContent[i].Split(',');
-                Maps[split[0]] = [split[0], split[1], split[2], split[3],split[4]];
-            }
-
-            Maps.TrimExcess();
 
             string[] iconContent = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\IconList.txt"));
 
@@ -53,9 +41,27 @@ namespace TableTopHubApp
         /// Gets the dictionary of map name to data. 
         /// </summary>
         /// <returns>array of map data.</returns>
-        public static Dictionary<string, string[]> GetMaps()
+        public static List<ManifestEntry> GetMaps()
         {
-            return Maps;
+            return manifestMaps;
+        }
+
+        /// <summary>
+        /// Helper function to retrieve a loaded map object from an id.
+        /// </summary>
+        /// <param name="id">The id of the map to retrieve.</param>
+        /// <returns>The loaded map object.</returns>
+        /// <exception cref="Exception">The program should never try an id that won't work.</exception>
+        public static Map GetMap(string id)
+        {
+            Map? map = StorageManager.LoadMapObject(id);
+
+            if (map == null)
+            {
+                throw new Exception("map not found");
+            }
+
+            return map;
         }
 
         /// <summary>
@@ -76,10 +82,6 @@ namespace TableTopHubApp
         public static bool IsAnimated(string name)
         {
             if (Icons.ContainsKey(name) && Icons[name][2] == "ANIMATED")
-            {
-                return true;
-            }
-            else if(Maps.ContainsKey(name) && Maps[name][4] == "ANIMATED")
             {
                 return true;
             }
@@ -120,15 +122,6 @@ namespace TableTopHubApp
         public static List<string> GetIconTitles()
         {
             return Icons.Keys.ToList();
-        }
-
-        /// <summary>
-        /// Gets the list of map titles for UI.
-        /// </summary>
-        /// <returns>List of string sound effects.</returns>
-        public static List<string> GetMapTitles()
-        {
-            return Maps.Keys.ToList();
         }
     }
 }
