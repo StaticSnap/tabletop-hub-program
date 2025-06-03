@@ -31,7 +31,7 @@ namespace TableTopHubApp
             for(int i = 0; i < iconContent.Length; i++)
             {
                 string[] split = iconContent[i].Split(",");
-                Icons[split[0]] = [split[0], split[1], split[2], split[3], split[4]];
+                Icons[split[0]] = split;
             }
 
             Icons.TrimExcess();
@@ -72,6 +72,23 @@ namespace TableTopHubApp
         public static string GetIconPath(string name)
         {
             return Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\icons\\", Icons[name][1]);
+        }
+
+        /// <summary>
+        /// Uses an icons name in order to retrieve data on it. If there is no data then return empty strings.
+        /// </summary>
+        /// <param name="name">the name of the icon.</param>
+        /// <returns>the statistics associated with that icon.</returns>
+        public static string[] GetCreatureStats(string name)
+        {
+            if (Icons[name].Length == 9)
+            {
+                return [Icons[name][5], Icons[name][6], Icons[name][7], Icons[name][8]];
+            }
+            else
+            {
+                return [string.Empty, string.Empty, string.Empty, "0"];
+            }
         }
 
         /// <summary>

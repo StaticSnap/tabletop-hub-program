@@ -61,6 +61,8 @@ namespace TableTopHubApp
             this.activeGrid = this.mainGrid;
 
             this.parentRef = appRef;
+
+            App.BattleTab.ElementSelected += this.SelectedCreatureChanged;
         }
 
         /// <summary>
@@ -759,6 +761,42 @@ namespace TableTopHubApp
         private void SoundVolumeChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             AudioPlayer.ChangeSoundEffectVolume((int)this.soundVolume.Value);
+        }
+
+        private void CurrentHealthChanged(object sender, RoutedEventArgs e)
+        {
+            App.BattleTab.UpdateHealth(this.statsGridCreatureCurrentHealth.Text);
+        }
+
+        private void SelectedCreatureChanged(object selected)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                if (selected.GetType() == typeof(CreatureIcon))
+                {
+                    CreatureIcon icon = (CreatureIcon)selected;
+                    string[] stats = icon.GetStats();
+                    this.statsGridCreatureName.Text = stats[0];
+                    this.statsGridCreatureStats.Text = stats[1];
+                    this.statsGridCreatureAbilities.Text = stats[2];
+                    this.statsGridCreatureMaxHealth.Text = stats[3];
+
+                    this.statsGridCreatureCurrentHealth.TextChanged -= this.CurrentHealthChanged;
+                    this.statsGridCreatureCurrentHealth.Text = stats[4];
+                    this.statsGridCreatureCurrentHealth.TextChanged += this.CurrentHealthChanged;
+                }
+                else
+                {
+                    this.statsGridCreatureName.Text = string.Empty;
+                    this.statsGridCreatureStats.Text = string.Empty;
+                    this.statsGridCreatureAbilities.Text = string.Empty;
+                    this.statsGridCreatureMaxHealth.Text = string.Empty;
+
+                    this.statsGridCreatureCurrentHealth.TextChanged -= this.CurrentHealthChanged;
+                    this.statsGridCreatureCurrentHealth.Text = string.Empty;
+                    this.statsGridCreatureCurrentHealth.TextChanged += this.CurrentHealthChanged;
+                }
+            });
         }
     }
 }

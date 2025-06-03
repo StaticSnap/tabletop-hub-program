@@ -28,6 +28,10 @@ namespace TableTopHubApp
         private UIElement? draggedElement = null;  // This will hold the dragged control
         private UIElement? selectedElement = null; // This stores the currently selected control
 
+        public delegate void ElementChangedEventHandler(object selected);
+
+        public event ElementChangedEventHandler ElementSelected;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BattleMapScreen"/> class.
         /// </summary>
@@ -56,12 +60,29 @@ namespace TableTopHubApp
             {
                 CreatureIcon creature = new CreatureIcon();
                 creature.ChangeIcon(creatureName);
-                Ellipse creatureIcon = creature.GetIcon();
-                Grid.SetColumn(creatureIcon, creature.GetIconWidth());
-                Grid.SetRow(creatureIcon, creature.GetIconHeight());
-                Grid.SetColumnSpan(creatureIcon, creature.GetIconWidth());
-                Grid.SetRowSpan(creatureIcon, creature.GetIconHeight());
-                this.mapGrid.Children.Add(creatureIcon);
+                Grid.SetColumn(creature, creature.GetIconWidth());
+                Grid.SetRow(creature, creature.GetIconHeight());
+                Grid.SetColumnSpan(creature, creature.GetIconWidth());
+                Grid.SetRowSpan(creature, creature.GetIconHeight());
+                this.mapGrid.Children.Add(creature);
+            });
+        }
+
+        /// <summary>
+        /// Takes in a string from UI and attempts to change the internal health value of the creature based off that string.
+        /// </summary>
+        /// <param name="healthVal">The string to be converted into int.</param>
+        public void UpdateHealth(string healthVal)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                int val = 0;
+
+                // Only change health if both the selected element is a creature icon and if the string input can be parsed.
+                if (this.selectedElement.GetType() == typeof(CreatureIcon) && int.TryParse(healthVal, out val))
+                {
+                    ((CreatureIcon)this.selectedElement).UpdateHealth(val);
+                }
             });
         }
 
@@ -245,6 +266,8 @@ namespace TableTopHubApp
                     this.draggedElement.CaptureMouse();  // Capture mouse to the control
 
                     this.selectedElement = element;
+
+                    this.ElementSelected.Invoke(this.selectedElement);
                 }
             }
         }
