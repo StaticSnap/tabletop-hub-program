@@ -47,10 +47,14 @@ namespace TableTopHubApp
             this.soundOptions.SelectedValuePath = "Id";
             this.soundOptions.SelectedIndex = 0;
 
-            this.overlayOptions.ItemsSource = OverlayManager.GetOverlayTitles();
+            this.overlayOptions.ItemsSource = OverlayManager.GetOverlays();
+            this.overlayOptions.DisplayMemberPath = "Name";
+            this.overlayOptions.SelectedValuePath = "Id";
             this.overlayOptions.SelectedIndex = 0;
 
-            this.iconOptions.ItemsSource = MapManager.GetIconTitles();
+            this.iconOptions.ItemsSource = MapManager.GetIcons();
+            this.iconOptions.DisplayMemberPath = "Name";
+            this.iconOptions.SelectedValuePath = "Id";
             this.iconOptions.SelectedIndex = 0;
 
             this.mapOptions.ItemsSource = MapManager.GetMaps();
@@ -449,7 +453,7 @@ namespace TableTopHubApp
 
         private void AddContentIconConfirmClick(object sender, RoutedEventArgs e)
         {
-            string[] data = new string[5];
+            string[] data = new string[8];
 
             if (this.addContentIconNameBox.Text.Length > 0)
             {
@@ -523,12 +527,31 @@ namespace TableTopHubApp
                 return;
             }
 
+            data[5] = this.addContentIconStatsBox.Text;
+            data[6] = this.addContentIconAttacksBox.Text;
+
+            int health = 1;
+            if (this.AddContentIconHealthBox.Text.Length > 0)
+            {
+                if(int.TryParse(this.AddContentIconHealthBox.Text, out health))
+                {
+                    data[7] = System.Text.RegularExpressions.Regex.Replace(this.AddContentIconHealthBox.Text, @"\s", string.Empty);
+                }
+                else
+                {
+                    this.addContentIconConfirmFeedback.Text = "Error: please use only numbers in your health";
+                    return;
+                }
+            }
+
             FileManager.CopyFile("icon");
             FileManager.AddData("icon", data);
             this.ContentClearAll();
             this.addContentIconConfirmFeedback.Text = "Successfully added!";
             MapManager.InitMaps();
-            this.iconOptions.ItemsSource = MapManager.GetIconTitles();
+            this.iconOptions.ItemsSource = MapManager.GetIcons();
+            this.iconOptions.DisplayMemberPath = "Name";
+            this.iconOptions.SelectedValuePath = "Id";
             this.iconOptions.SelectedIndex = 0;
         }
 
@@ -578,7 +601,9 @@ namespace TableTopHubApp
             this.ContentClearAll();
             this.addContentOverlayConfirmFeedback.Text = "Successfully added!";
             OverlayManager.InitAssets();
-            this.overlayOptions.ItemsSource = OverlayManager.GetOverlayTitles();
+            this.overlayOptions.ItemsSource = OverlayManager.GetOverlays();
+            this.overlayOptions.DisplayMemberPath = "Name";
+            this.overlayOptions.SelectedValuePath = "Id";
             this.overlayOptions.SelectedIndex = 0;
         }
 

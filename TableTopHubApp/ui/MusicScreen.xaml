@@ -35,7 +35,7 @@
             <Button Grid.Column="2" x:Name="statsScreenButton" Margin="20" Click="ScreenChangeClick" Content="Stats Screen"></Button>
         </Grid>
 
-        <Grid Grid.Row="1" x:Name="mainGrid" IsEnabled="False" Visibility="Hidden">
+        <Grid Grid.Row="1" x:Name="mainGrid" IsEnabled="True" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -275,7 +275,7 @@
                 <Button Grid.Column="2" x:Name="removeContentButton" Margin="30" Click="AddContentSubScreenChange" Content="Remove" Background="PaleVioletRed"></Button>
             </Grid>
 
-            <Grid Grid.Row="1" x:Name="addContentSubGrid" IsEnabled="True" Visibility="Visible" Background="PaleGreen">
+            <Grid Grid.Row="1" x:Name="addContentSubGrid" IsEnabled="False" Visibility="Hidden" Background="PaleGreen">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -392,11 +392,61 @@
                         </Button.Style>
                     </Button>
 
+                    <Grid Grid.Column="0" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="7*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="9*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="1" Margin="0" Text="Type a name for your icon"> </TextBlock>
+
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="addContentIconNameBox" Background="LightGray"></TextBox>
+                    </Grid>
+
+                    <Grid Grid.Column="0" Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="7*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="9*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="1" Margin="0" Text="Type the stats of your icon"></TextBlock>
+
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="addContentIconStatsBox" Background="LightGray"></TextBox>
+                    </Grid>
+
+                    <Grid Grid.Column="1" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="7*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="9*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="1" Margin="0" Text="Type the attacks of your icon"></TextBlock>
+
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="addContentIconAttacksBox" Background="LightGray"></TextBox>
+                    </Grid>
+
                     <TextBlock Grid.Column="1" x:Name="addContentIconOpenFileFeedback" Margin="40" TextWrapping="Wrap"></TextBlock>
-
-                    <TextBlock Grid.Row="2" Margin="40" Text="Type a name for your icon"></TextBlock>
-
-                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="addContentIconNameBox" Margin="30" Background="LightGray"></TextBox>
 
                     <Button Grid.Column="2" Grid.Row="0" Margin="40" Click="AddContentIconConfirmClick" Content="confirm selection">
                         <Button.Style>
@@ -414,17 +464,22 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="7*"></RowDefinition>
                             <RowDefinition></RowDefinition>
+                            <RowDefinition Height="7*"></RowDefinition>
                             <RowDefinition></RowDefinition>
+                            <RowDefinition Height="7*"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Width:" Margin=" 20"></TextBlock>
-                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="AddContentIconWidthBox" Background="LightGray" Margin="30"></TextBox>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Width:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="AddContentIconWidthBox" Background="LightGray" Margin="0"></TextBox>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Height:" Margin="20"></TextBlock>
-                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="AddContentIconHeightBox" Background="LightGray" Margin="30"></TextBox>
-                        
-                        
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Height:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <TextBox Grid.Row="2" Grid.Column="1" x:Name="AddContentIconHeightBox" Background="LightGray" Margin="0"></TextBox>
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Max HP:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <TextBox Grid.Row="4" Grid.Column="1" x:Name="AddContentIconHealthBox" Background="LightGray" Margin="0"></TextBox>
+
                     </Grid>
                 </Grid>
 
@@ -546,7 +601,7 @@
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="1" x:Name="statsGrid" IsEnabled="True" Visibility="Visible">
+        <Grid Grid.Row="1" x:Name="statsGrid" IsEnabled="False" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="8*"></RowDefinition>

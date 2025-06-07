@@ -10,8 +10,14 @@
 
         public string Type { get; set; }
 
-        public string Width { get; set; } = "1";
+        public int Width { get; set; } = 1;
 
-        public string Height { get; set; } = "1";
+        public int Height { get; set; } = 1;
+
+        public string Stats { get; set; }
+
+        public string Attacks { get; set; }
+
+        public int MaxHealth { get; set; } = 1;
     }
 }

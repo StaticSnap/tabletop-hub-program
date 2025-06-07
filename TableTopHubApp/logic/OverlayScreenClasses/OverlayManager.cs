@@ -10,63 +10,43 @@ namespace TableTopHubApp
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Xml.Linq;
 
     /// <summary>
     /// Data management class for overlay objects.
     /// </summary>
     internal static class OverlayManager
     {
-        //name -> [name,path,format,loop,green screen value]
         //format can be IMAGE, VIDEO, GIF
         //green screen value is either a hex code for the color to remove or NULL 
         //by default images and gifs remain on screen but a video will play only once if the loop value is not set to TRUE
-        private static readonly Dictionary<string, string[]> OverlayObjects = new Dictionary<string, string[]>();
+        private static List<ManifestEntry> manifestOverlays = StorageManager.GetAllOverlayEntries();
 
         /// <summary>
         /// Read all data for overlay assets.
         /// </summary>
         public static void InitAssets()
         {
-            OverlayObjects.Clear();
-
-            string[] assetContent = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\OverlayList.txt"));
-
-            for (int i = 0; i < assetContent.Length; i++)
-            {
-                string[] split = assetContent[i].Split(',');
-
-                OverlayObjects[split[0]] = [split[0], split[1], split[2], split[3], split[4]];
-            }
-
-            OverlayObjects.TrimExcess();
-        }
-
-        /// <summary>
-        /// Gets the dictionary of overlay data.
-        /// </summary>
-        /// <returns>Key value pair of name to data.</returns>
-        public static Dictionary<string, string[]> GetOverlayObjects()
-        {
-            return OverlayObjects;
+            manifestOverlays = StorageManager.GetAllOverlayEntries();
         }
 
         /// <summary>
         /// Formats path for program without having to make it worry about IO.
         /// </summary>
-        /// <param name="name">name of the overlay asset.</param>
+        /// <param name="overlay">Overlay object.</param>
         /// <returns>formatted file path.</returns>
-        public static string GetOverlayPath(string name)
+        public static string GetOverlayPath(Overlay overlay)
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\overlays\\", OverlayObjects[name][1]);
+            return Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\overlays\\", overlay.FilePath);
         }
 
         /// <summary>
-        /// Gets all the names of the assets.
+        /// Gets all of the manifest entries for the Overlays.
         /// </summary>
-        /// <returns>Array of overlay names for ui to read.</returns>
-        public static string[] GetOverlayTitles()
+        /// <returns>List of manifest entries.</returns>
+        public static List<ManifestEntry> GetOverlays()
         {
-            return OverlayObjects.Keys.ToArray();
+            return manifestOverlays;
         }
     }
 }
