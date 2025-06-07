@@ -281,11 +281,23 @@ namespace TableTopHubApp
             }
             else if (type == "icon")
             {
-                currentFilePath = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\IconList.txt");
+                int width = 1;
+                int height = 1;
+                int health = 1;
+
+                int.TryParse(data[3], out width);
+                int.TryParse(data[4], out height);
+                int.TryParse(data[7], out health);
+
+                Icon newIcon = new Icon { Name = data[0], FilePath = data[1], Type = data[2], Width = width, Height = height, Stats = data[5], Attacks = data[6], MaxHealth = health };
+                StorageManager.SaveObject(newIcon);
+                return;
             }
             else if (type == "overlay")
             {
-                currentFilePath = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\OverlayList.txt");
+                Overlay newOverlay = new Overlay { Name = data[0], FilePath = data[1], Type = data[2], Looping = data[3], ChromaVal = data[4] };
+                StorageManager.SaveObject(newOverlay);
+                return;
             }
             else if (type == "map")
             {
@@ -304,18 +316,6 @@ namespace TableTopHubApp
             {
                 throw new Exception("unimplemented type");
             }
-
-            StreamWriter writer = File.AppendText(currentFilePath);
-
-            string formattedData = string.Empty;
-            for (int i = 0; i < data.Length; i++)
-            {
-                formattedData = formattedData + data[i] + ",";
-            }
-
-            writer.WriteLine(formattedData);
-
-            writer.Close();
         }
     }
 }

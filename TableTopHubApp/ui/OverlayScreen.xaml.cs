@@ -5,20 +5,12 @@
 namespace TableTopHubApp
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Documents;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
-    using System.Windows.Shapes;
 
     /// <summary>
     /// The overlay screen for the hub. allows for image and video functionality. TODO.
@@ -103,29 +95,29 @@ namespace TableTopHubApp
         /// <summary>
         /// Begins showing the given overlay element.
         /// </summary>
-        /// <param name="elementName">Name of the element to display.</param>
-        public void EnableOverlayElement(string elementName)
+        /// <param name="elementId">Id of the element to display.</param>
+        public void EnableOverlayElement(string elementId)
         {
             if (!editing)
             {
                 this.Dispatcher.Invoke(() =>
                 {
-                    Dictionary<string, string[]> overlayDat = OverlayManager.GetOverlayObjects();
+                    Overlay? overlay = StorageManager.LoadOverlayObject(elementId);
 
-                    if (overlayDat.ContainsKey(elementName))
+                    if (overlay != null)
                     {
                         this.DisableOverlayElement();
-                        switch (overlayDat[elementName][2])
+                        switch (overlay.Type)
                         {
                             // Handle each of the file types seperatly
                             case "IMAGE":
-                                this.EnableImage(overlayDat[elementName]);
+                                this.EnableImage(overlay);
                                 break;
                             case "VIDEO":
-                                this.EnableVideo(overlayDat[elementName]);
+                                this.EnableVideo(overlay);
                                 break;
                             case "GIF":
-                                this.EnableGif(overlayDat[elementName]);
+                                this.EnableGif(overlay);
                                 break;
                             default:
                                 throw new Exception("unrecognized file format");
@@ -165,24 +157,24 @@ namespace TableTopHubApp
         /// <summary>
         /// Reads the image data and puts the image on the overlay.
         /// </summary>
-        /// <param name="imageDat">String of data required to open image.</param>
+        /// <param name="overlay">overlay object</param>
         /// <exception cref="Exception">I haven't written the greenscreen.</exception>
-        private void EnableImage(string[] imageDat)
+        private void EnableImage(Overlay overlay)
         {
-            Image overlay = new Image();
-            if (imageDat[4] == "NULL")
+            Image image = new Image();
+            if (overlay.ChromaVal == "NULL")
             {
                 BitmapImage imageFile = new BitmapImage();
 
                 imageFile.BeginInit();
 
-                imageFile.UriSource = new Uri(OverlayManager.GetOverlayPath(imageDat[0]));
+                imageFile.UriSource = new Uri(OverlayManager.GetOverlayPath(overlay));
 
                 imageFile.EndInit();
 
-                overlay.Source = imageFile;
+                image.Source = imageFile;
 
-                screenElement = overlay;
+                screenElement = image;
 
                 this.grid.Children.Add(screenElement);
             }
@@ -196,17 +188,17 @@ namespace TableTopHubApp
         /// <summary>
         /// Reads the video data and begins playback.
         /// </summary>
-        /// <param name="videoDat">Data to open videos.</param>
-        private void EnableVideo(string[] videoDat)
+        /// <param name="overlay">Overlay object carrying data.</param>
+        private void EnableVideo(Overlay overlay)
         {
             //makes sure that spamming start video doesn't stack events.
             overlayVideo.MediaEnded -= this.DisposeVideo;
 
             // looping video.
-            if (videoDat[3] == "TRUE")
+            if (overlay.Looping == "TRUE")
             {
                 // video has no green screen.
-                if(videoDat[4] == "NULL")
+                if(overlay.ChromaVal == "NULL")
                 {
                 }
 
@@ -220,10 +212,10 @@ namespace TableTopHubApp
             else
             {
                 // video has no green screen.
-                if(videoDat[4] == "NULL")
+                if(overlay.ChromaVal == "NULL")
                 {
                     overlayVideo.LoadedBehavior = MediaState.Manual;
-                    overlayVideo.Source = new Uri(OverlayManager.GetOverlayPath(videoDat[0]), UriKind.Absolute);
+                    overlayVideo.Source = new Uri(OverlayManager.GetOverlayPath(overlay), UriKind.Absolute);
 
                     screenElement = overlayVideo;
 
@@ -241,7 +233,7 @@ namespace TableTopHubApp
             }
         }
 
-        private void EnableGif(string[] gifDat)
+        private void EnableGif(Overlay overlay)
         {
             // TODO
         }

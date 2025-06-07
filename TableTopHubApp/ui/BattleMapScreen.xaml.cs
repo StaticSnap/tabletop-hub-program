@@ -94,7 +94,7 @@ namespace TableTopHubApp
         {
             this.Dispatcher.Invoke(() => 
             { 
-                Map map = MapManager.GetMap(mapId);
+                Map map = MapManager.GetLoadedMap(mapId);
 
                 if (map.Width == this.sizeDat.Item1 && map.Height == this.sizeDat.Item2)
                 {
@@ -251,6 +251,11 @@ namespace TableTopHubApp
         {
             if (e.ChangedButton == MouseButton.Left)
             {
+                if(this.selectedElement != null && this.selectedElement.GetType() == typeof(CreatureIcon))
+                {
+                    ((CreatureIcon)this.selectedElement).Selected = false;
+                }
+
                 this.draggedElement = null;
                 this.selectedElement = null;
 
@@ -259,6 +264,11 @@ namespace TableTopHubApp
 
                 if (element != null)
                 {
+                    if(element.GetType() == typeof(CreatureIcon))
+                    {
+                        ((CreatureIcon)element).Selected = true;
+                    }
+
                     // Start dragging the element
                     this.isDragging = true;
                     this.draggedElement = element;

@@ -4,7 +4,6 @@
 
 namespace TableTopHubApp
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.IO.Compression;
@@ -24,6 +23,14 @@ namespace TableTopHubApp
         private static string manifestMapPath = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\MapManifest.json");
         private static List<ManifestEntry> manifestMap = new();
 
+        private static string dataOverlayDir = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\Overlay");
+        private static string manifestOverlayPath = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\OverlayManifest.json");
+        private static List<ManifestEntry> manifestOverlay = new();
+
+        private static string dataIconDir = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\Icon");
+        private static string manifestIconPath = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\IconManifest.json");
+        private static List<ManifestEntry> manifestIcon = new();
+
         public static void Init()
         {
             if (!Path.Exists(dataSoundDir))
@@ -39,6 +46,16 @@ namespace TableTopHubApp
             if (!Path.Exists(dataMapDir))
             {
                 Directory.CreateDirectory(dataMapDir);
+            }
+
+            if (!Path.Exists(dataOverlayDir))
+            {
+                Directory.CreateDirectory(dataOverlayDir);
+            }
+
+            if (!Path.Exists(dataIconDir))
+            {
+                Directory.CreateDirectory(dataIconDir);
             }
 
             LoadManifests();
@@ -63,6 +80,18 @@ namespace TableTopHubApp
                 string json = File.ReadAllText(manifestMapPath);
                 manifestMap = JsonSerializer.Deserialize<List<ManifestEntry>>(json) ?? new();
             }
+
+            if (File.Exists(manifestOverlayPath))
+            {
+                string json = File.ReadAllText(manifestOverlayPath);
+                manifestOverlay = JsonSerializer.Deserialize<List<ManifestEntry>>(json) ?? new();
+            }
+
+            if (File.Exists(manifestIconPath))
+            {
+                string json = File.ReadAllText(manifestIconPath);
+                manifestIcon = JsonSerializer.Deserialize<List<ManifestEntry>>(json) ?? new();
+            }
         }
 
         private static void SaveSoundManifest()
@@ -81,6 +110,18 @@ namespace TableTopHubApp
         {
             string json = JsonSerializer.Serialize(manifestMap, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(manifestMapPath, json);
+        }
+
+        private static void SaveOverlayManifest()
+        {
+            string json = JsonSerializer.Serialize(manifestOverlay, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(manifestOverlayPath, json);
+        }
+
+        private static void SaveIconManifest()
+        {
+            string json = JsonSerializer.Serialize(manifestIcon, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(manifestIconPath, json);
         }
 
         public static void SaveObject(SoundEffect obj)
@@ -123,6 +164,34 @@ namespace TableTopHubApp
             manifestMap.RemoveAll(e => e.Id == obj.Id);
             manifestMap.Add(new ManifestEntry { Id = obj.Id, Name = obj.Name, FileName = fileName });
             SaveMapManifest();
+        }
+
+        public static void SaveObject(Overlay obj)
+        {
+            string fileName = $"{obj.Id}.gz";
+            string filePath = Path.Combine(dataOverlayDir, fileName);
+
+            using FileStream fs = new(filePath, FileMode.Create);
+            using GZipStream gzip = new(fs, CompressionLevel.Optimal);
+            JsonSerializer.Serialize(gzip, obj);
+
+            manifestOverlay.RemoveAll(e => e.Id == obj.Id);
+            manifestOverlay.Add(new ManifestEntry { Id = obj.Id, Name = obj.Name, FileName = fileName });
+            SaveOverlayManifest();
+        }
+
+        public static void SaveObject(Icon obj)
+        {
+            string fileName = $"{obj.Id}.gz";
+            string filePath = Path.Combine(dataIconDir, fileName);
+
+            using FileStream fs = new(filePath, FileMode.Create);
+            using GZipStream gzip = new(fs, CompressionLevel.Optimal);
+            JsonSerializer.Serialize(gzip, obj);
+
+            manifestIcon.RemoveAll(e => e.Id == obj.Id);
+            manifestIcon.Add(new ManifestEntry { Id = obj.Id, Name = obj.Name, FileName = fileName });
+            SaveIconManifest();
         }
 
         public static SoundEffect? LoadSoundObject(string id)
@@ -182,6 +251,44 @@ namespace TableTopHubApp
             return JsonSerializer.Deserialize<Map>(gzip);
         }
 
+        public static Overlay? LoadOverlayObject(string id)
+        {
+            ManifestEntry? entry = manifestOverlay.Find(e => e.Id == id);
+            if (entry == null)
+            {
+                return null;
+            }
+
+            string filePath = Path.Combine(dataOverlayDir, entry.FileName);
+            if (!File.Exists(filePath))
+            {
+                return null;
+            }
+
+            using FileStream fs = new(filePath, FileMode.Open);
+            using GZipStream gzip = new(fs, CompressionMode.Decompress);
+            return JsonSerializer.Deserialize<Overlay>(gzip);
+        }
+
+        public static Icon? LoadIconObject(string id)
+        {
+            ManifestEntry? entry = manifestIcon.Find(e => e.Id == id);
+            if (entry == null)
+            {
+                return null;
+            }
+
+            string filePath = Path.Combine(dataIconDir, entry.FileName);
+            if (!File.Exists(filePath))
+            {
+                return null;
+            }
+
+            using FileStream fs = new(filePath, FileMode.Open);
+            using GZipStream gzip = new(fs, CompressionMode.Decompress);
+            return JsonSerializer.Deserialize<Icon>(gzip);
+        }
+
         public static bool DeleteObject(string id)
         {
             ManifestEntry? entry = manifestSound.Find(e => e.Id == id);
@@ -226,6 +333,34 @@ namespace TableTopHubApp
                 return true;
             }
 
+            entry = manifestOverlay.Find(e => e.Id == id);
+            if (entry != null)
+            {
+                string filepath = Path.Combine(dataOverlayDir, entry.FileName);
+                if (File.Exists(filepath))
+                {
+                    File.Delete(filepath);
+                }
+
+                manifestOverlay.RemoveAll(e => e.Id == id);
+                SaveOverlayManifest();
+                return true;
+            }
+
+            entry = manifestIcon.Find(e => e.Id == id);
+            if (entry != null)
+            {
+                string filepath = Path.Combine(dataIconDir, entry.FileName);
+                if (File.Exists(filepath))
+                {
+                    File.Delete(filepath);
+                }
+
+                manifestIcon.RemoveAll(e => e.Id == id);
+                SaveIconManifest();
+                return true;
+            }
+
             return false;
         }
 
@@ -242,6 +377,16 @@ namespace TableTopHubApp
         public static List<ManifestEntry> GetAllMapEntries()
         {
             return new List<ManifestEntry>(manifestMap);
+        }
+
+        public static List<ManifestEntry> GetAllOverlayEntries()
+        {
+            return new List<ManifestEntry>(manifestOverlay);
+        }
+
+        public static List<ManifestEntry> GetAllIconEntries()
+        {
+            return new List<ManifestEntry>(manifestIcon);
         }
     }
 }

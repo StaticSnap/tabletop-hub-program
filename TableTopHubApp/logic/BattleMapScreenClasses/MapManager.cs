@@ -14,9 +14,7 @@ namespace TableTopHubApp
     internal static class MapManager
     {
         private static List<ManifestEntry> manifestMaps = StorageManager.GetAllMapEntries();
-
-        //name -> [name,path,animated?]
-        private static readonly Dictionary<string, string[]> Icons = new Dictionary<string, string[]>();
+        private static List<ManifestEntry> manifestIcons = StorageManager.GetAllIconEntries();
 
         /// <summary>
         /// Open up the map data file and read all the data inside.
@@ -24,17 +22,7 @@ namespace TableTopHubApp
         public static void InitMaps()
         {
             manifestMaps = StorageManager.GetAllMapEntries();
-            Icons.Clear();
-
-            string[] iconContent = File.ReadAllLines(Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\IconList.txt"));
-
-            for(int i = 0; i < iconContent.Length; i++)
-            {
-                string[] split = iconContent[i].Split(",");
-                Icons[split[0]] = split;
-            }
-
-            Icons.TrimExcess();
+            manifestIcons = StorageManager.GetAllIconEntries();
         }
 
         /// <summary>
@@ -52,7 +40,7 @@ namespace TableTopHubApp
         /// <param name="id">The id of the map to retrieve.</param>
         /// <returns>The loaded map object.</returns>
         /// <exception cref="Exception">The program should never try an id that won't work.</exception>
-        public static Map GetMap(string id)
+        public static Map GetLoadedMap(string id)
         {
             Map? map = StorageManager.LoadMapObject(id);
 
@@ -67,78 +55,37 @@ namespace TableTopHubApp
         /// <summary>
         /// Gets the path associated with a specific icon.
         /// </summary>
-        /// <param name="name">name of the path.</param>
+        /// <param name="icone">The icon to use..</param>
         /// <returns>string path.</returns>
-        public static string GetIconPath(string name)
+        public static string GetIconPath(Icon icon)
         {
-            return Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\icons\\", Icons[name][1]);
+            return Path.Combine(Directory.GetCurrentDirectory(), "resources\\textures\\icons\\", icon.FilePath);
         }
 
         /// <summary>
         /// Uses an icons name in order to retrieve data on it. If there is no data then return empty strings.
         /// </summary>
-        /// <param name="name">the name of the icon.</param>
+        /// <param name="id">the name of the icon.</param>
         /// <returns>the statistics associated with that icon.</returns>
-        public static string[] GetCreatureStats(string name)
+        public static Icon GetLoadedIcon(string id)
         {
-            if (Icons[name].Length == 9)
+            Icon? icon = StorageManager.LoadIconObject(id);
+
+            if (icon == null)
             {
-                return [Icons[name][5], Icons[name][6], Icons[name][7], Icons[name][8]];
+                throw new Exception("icon not found");
             }
-            else
-            {
-                return [string.Empty, string.Empty, string.Empty, "0"];
-            }
+
+            return icon;
         }
 
         /// <summary>
-        /// Bool stating whether icon is a gif or png.
+        /// Gets the list of icons for UI.
         /// </summary>
-        /// <param name="name">name of icon.</param>
-        /// <returns>true for gif, false for png.</returns>
-        public static bool IsAnimated(string name)
+        /// <returns>List of manifest entries on icons.</returns>
+        public static List<ManifestEntry> GetIcons()
         {
-            if (Icons.ContainsKey(name) && Icons[name][2] == "ANIMATED")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Helper function to get the number of cells an icon takes up horizontally.
-        /// </summary>
-        /// <param name="name">Key to icon.</param>
-        /// <returns>Integer value of width.</returns>
-        public static int GetIconWidth(string name)
-        {
-            int width;
-            int.TryParse(Icons[name][3], out width);
-            return width;
-        }
-
-        /// <summary>
-        /// Helper function to get the number of cells an icon takes up vertically.
-        /// </summary>
-        /// <param name="name">Key to icon.</param>
-        /// <returns>Integer value of height.</returns>
-        public static int GetIconHeight(string name)
-        {
-            int height;
-            int.TryParse (Icons[name][4], out height);
-            return height;
-        }
-
-        /// <summary>
-        /// Gets the list of icon titles for UI.
-        /// </summary>
-        /// <returns>List of string titles.</returns>
-        public static List<string> GetIconTitles()
-        {
-            return Icons.Keys.ToList();
+            return manifestIcons;
         }
     }
 }

@@ -19,8 +19,9 @@ namespace TableTopHubApp
         private ImageBrush iconImage = new ImageBrush();
         private VisualBrush iconGif = new VisualBrush();
         private Ellipse fullIcon = new Ellipse();
-        private string iconName = string.Empty;
+        private Icon sourceIcon = new Icon();
         private Creature stats = new Creature(string.Empty, string.Empty, string.Empty, 0);
+        private bool selected = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatureIcon"/> class.
@@ -32,21 +33,41 @@ namespace TableTopHubApp
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether or not the icon is selected.
+        /// </summary>
+        public bool Selected
+        {
+            get => this.selected;
+            set
+            {  
+                this.selected = value;
+                this.InvalidateVisual();
+            }
+        }
+
+        /// <summary>
         /// Take in the name of an icon and open the correct file and set it to be in the ellipse.
         /// </summary>
-        /// <param name="iconName">name of the image.</param>
-        public void ChangeIcon(string iconName)
+        /// <param name="id">name of the image.</param>
+        public void ChangeIcon(string id)
         {
-            this.iconName = iconName;
+            Icon? attemptLoad = StorageManager.LoadIconObject(id);
+
+            if(attemptLoad == null)
+            {
+                throw new Exception("Icon not found.");
+            }
+
+            this.sourceIcon = attemptLoad;
 
             BitmapImage uri = new BitmapImage();
             uri.BeginInit();
 
-            uri.UriSource = new Uri(MapManager.GetIconPath(iconName));
+            uri.UriSource = new Uri(MapManager.GetIconPath(this.sourceIcon));
 
             uri.EndInit();
 
-            if (MapManager.IsAnimated(iconName))
+            if (this.sourceIcon.Type == "ANIMATED")
             {
                 Image temp = new Image();
 
@@ -63,8 +84,7 @@ namespace TableTopHubApp
                 this.fullIcon.Fill = this.iconImage;
             }
 
-            string[] tempStats = MapManager.GetCreatureStats(iconName);
-            this.stats = new Creature(tempStats[0], tempStats[1], tempStats[2], int.Parse(tempStats[3]));
+            this.stats = new Creature(this.sourceIcon.Name, this.sourceIcon.Stats, this.sourceIcon.Attacks, this.sourceIcon.MaxHealth);
         }
 
         /// <summary>
@@ -82,7 +102,7 @@ namespace TableTopHubApp
         /// <returns>Integer width of icon.</returns>
         public int GetIconWidth()
         {
-            return MapManager.GetIconWidth(this.iconName);
+            return this.sourceIcon.Width;
         }
 
         /// <summary>
@@ -91,7 +111,7 @@ namespace TableTopHubApp
         /// <returns>Integer height of icon.</returns>
         public int GetIconHeight()
         {
-            return MapManager.GetIconHeight(this.iconName);
+            return this.sourceIcon.Height;
         }
 
         /// <summary>
@@ -126,11 +146,22 @@ namespace TableTopHubApp
         /// <param name="drawingContext">The canvas on which to draw.</param>
         protected override void OnRender(DrawingContext drawingContext)
         {
-            Pen pen = new Pen(this.fullIcon.Stroke, this.fullIcon.StrokeThickness);
+            if (this.selected)
+            {
+                Pen pen = new Pen(Brushes.Gold, 5);
 
-            System.Windows.Rect ellipseBounds = new System.Windows.Rect(0, 0, this.RenderSize.Width, this.RenderSize.Height);
+                System.Windows.Rect ellipseBounds = new System.Windows.Rect(0, 0, this.RenderSize.Width, this.RenderSize.Height);
 
-            drawingContext.DrawEllipse(this.fullIcon.Fill, pen, new System.Windows.Point(ellipseBounds.Width / 2, ellipseBounds.Height / 2), ellipseBounds.Width / 2, ellipseBounds.Height / 2);
+                drawingContext.DrawEllipse(this.fullIcon.Fill, pen, new System.Windows.Point(ellipseBounds.Width / 2, ellipseBounds.Height / 2), ellipseBounds.Width / 2, ellipseBounds.Height / 2);
+            }
+            else
+            {
+                Pen pen = new Pen(this.fullIcon.Stroke, this.fullIcon.StrokeThickness);
+
+                System.Windows.Rect ellipseBounds = new System.Windows.Rect(0, 0, this.RenderSize.Width, this.RenderSize.Height);
+
+                drawingContext.DrawEllipse(this.fullIcon.Fill, pen, new System.Windows.Point(ellipseBounds.Width / 2, ellipseBounds.Height / 2), ellipseBounds.Width / 2, ellipseBounds.Height / 2);
+            }
         }
     }
 }
