@@ -62,6 +62,31 @@ namespace TableTopHubApp
             this.mapOptions.SelectedValuePath = "Id";
             this.mapOptions.SelectedIndex = 0;
 
+            this.AddContentAmbianceOptions.ItemsSource = AudioManager.GetSoundEffects();
+            this.AddContentAmbianceOptions.DisplayMemberPath = "Name";
+            this.AddContentAmbianceOptions.SelectedValuePath = "Id";
+            this.AddContentAmbianceOptions.SelectedIndex = 0;
+
+            this.AddContentAmbianceOptions1.ItemsSource = AudioManager.GetSoundEffects();
+            this.AddContentAmbianceOptions1.DisplayMemberPath = "Name";
+            this.AddContentAmbianceOptions1.SelectedValuePath = "Id";
+            this.AddContentAmbianceOptions1.SelectedIndex = 0;
+
+            this.AddContentAmbianceOptions2.ItemsSource = AudioManager.GetSoundEffects();
+            this.AddContentAmbianceOptions2.DisplayMemberPath = "Name";
+            this.AddContentAmbianceOptions2.SelectedValuePath = "Id";
+            this.AddContentAmbianceOptions2.SelectedIndex = 0;
+
+            this.AddContentAmbianceOptions3.ItemsSource = AudioManager.GetSoundEffects();
+            this.AddContentAmbianceOptions3.DisplayMemberPath = "Name";
+            this.AddContentAmbianceOptions3.SelectedValuePath = "Id";
+            this.AddContentAmbianceOptions3.SelectedIndex = 0;
+
+            this.AddContentAmbianceOptions4.ItemsSource = AudioManager.GetSoundEffects();
+            this.AddContentAmbianceOptions4.DisplayMemberPath = "Name";
+            this.AddContentAmbianceOptions4.SelectedValuePath = "Id";
+            this.AddContentAmbianceOptions4.SelectedIndex = 0;
+
             this.activeGrid = this.mainGrid;
 
             this.parentRef = appRef;
@@ -208,6 +233,11 @@ namespace TableTopHubApp
                 this.addContentMapGrid.Visibility = Visibility.Visible;
 
                 this.activeSubSubGrid = this.addContentMapGrid;
+            }
+            else if (selected == "System.Windows.Controls.ComboBoxItem: ambiance")
+            {
+                this.addContentAmbianceGrid.IsEnabled = true;
+                this.addContentAmbianceGrid.Visibility = Visibility.Visible;
             }
             else if(selected == null)
             {
@@ -699,6 +729,22 @@ namespace TableTopHubApp
             this.mapOptions.DisplayMemberPath = "Name";
             this.mapOptions.SelectedValuePath = "Id";
             this.mapOptions.SelectedIndex = 0;
+        }
+
+        private void AddContentAmbianceClearClick(object sender, RoutedEventArgs e)
+        {
+            // TODO
+        }
+
+        private void AddContentAmbianceConfirmClick(object sender, RoutedEventArgs e)
+        {
+            //no name entered case
+            if(this.addContentAmbianceName.Text == string.Empty)
+            {
+                return;
+            }
+            
+            //TODO
         }
 
         private void PlayMusicClick(object sender, RoutedEventArgs e)
