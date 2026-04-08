@@ -26,6 +26,7 @@ namespace TableTopHubApp
         public static string CurrentFilePath
         {
             get { return currentFilePath; }
+            set { currentFilePath = value; }
         }
 
         /// <summary>
@@ -34,6 +35,7 @@ namespace TableTopHubApp
         public static string CurrentIntroPath
         {
             get { return currentIntroPath; }
+            set { currentFilePath = value; }
         }
 
         /// <summary>
@@ -185,7 +187,7 @@ namespace TableTopHubApp
         /// Copies the file from it's origional location to the resources folder for later use.
         /// </summary>
         /// <param name="type">the type of resource determines where it will be placed.</param>
-        /// <returns>true if file was copied and fals eif file already exists.</returns>
+        /// <returns>true if file was copied and false if file already exists.</returns>
         public static bool CopyFile(string type)
         {
             string finalLocation = string.Empty;
@@ -264,18 +266,29 @@ namespace TableTopHubApp
         /// </summary>
         /// <param name="type">type of resource.</param>
         /// <param name="data">data associated with that resource.</param>
+        /// <param name="id">id of the object in the case that you are updating an existing entry.</param>
         /// <exception cref="Exception">passed type which doesn't exists.</exception>
-        public static void AddData(string type, string[] data)
+        public static void AddData(string type, string[] data, string id = "NULL")
         {
             if (type == "music")
             {
                 Track newTrack = new Track { Name = data[0], LoopPath = data[1], IntroPath = data[2] };
+                if(id != "NULL")
+                {
+                    newTrack.Id = id;
+                }
+
                 StorageManager.SaveObject(newTrack);
                 return;
             }
             else if (type == "sound")
             {
                 SoundEffect newSound = new SoundEffect { Name = data[0], FilePath = data[1] };
+                if (id != "NULL")
+                {
+                    newSound.Id = id;
+                }
+
                 StorageManager.SaveObject(newSound);
                 return;
             }
@@ -290,21 +303,34 @@ namespace TableTopHubApp
                 int.TryParse(data[7], out health);
 
                 Icon newIcon = new Icon { Name = data[0], FilePath = data[1], Type = data[2], Width = width, Height = height, Stats = data[5], Attacks = data[6], MaxHealth = health };
+                if (id != "NULL")
+                {
+                    newIcon.Id = id;
+                }
+
                 StorageManager.SaveObject(newIcon);
                 return;
             }
             else if (type == "overlay")
             {
                 Overlay newOverlay = new Overlay { Name = data[0], FilePath = data[1], Type = data[2], Looping = data[3], ChromaVal = data[4] };
+                if (id != "NULL")
+                {
+                    newOverlay.Id = id;
+                }
+
                 StorageManager.SaveObject(newOverlay);
                 return;
             }
             else if (type == "map")
             {
-
                 Map newMap = new Map { Name = data[0], FilePath = data[1], Width = data[2], Height = data[3] };
+                if (id != "NULL")
+                {
+                    newMap.Id = id;
+                }
 
-                if(Path.GetExtension(newMap.FilePath) == ".gif")
+                if (Path.GetExtension(newMap.FilePath) == ".gif")
                 {
                     newMap.Type = "ANIMATED";
                 }

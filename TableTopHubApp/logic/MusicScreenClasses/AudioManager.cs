@@ -67,6 +67,20 @@ namespace TableTopHubApp
             }
         }
 
+        public static string GetTrackTitle(string trackId)
+        {
+            Track? trackData = StorageManager.LoadTrackObject(trackId);
+
+            if(trackData == null)
+            {
+                throw new Exception("song not found");
+            }
+            else
+            {
+                return trackData.Name;
+            }
+        }
+
         /// <summary>
         /// Takes a sond effect and gets its corresponding file path.
         /// </summary>

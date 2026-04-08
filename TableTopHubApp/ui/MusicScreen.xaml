@@ -316,7 +316,7 @@
                 <Button Grid.Column="5" Grid.Row="1" x:Name="removeContentButton" Click="AddContentSubScreenChange" Content="Remove" Background="PaleVioletRed"></Button>
             </Grid>
 
-            <Grid Grid.Row="1" x:Name="addContentSubGrid" IsEnabled="True" Visibility="Visible" Background="PaleGreen">
+            <Grid Grid.Row="1" x:Name="addContentSubGrid" IsEnabled="False" Visibility="Hidden" Background="PaleGreen">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -538,7 +538,7 @@
                     </Grid>
                 </Grid>
 
-                <Grid Grid.Column="1" Grid.Row="1" x:Name="addContentAmbianceGrid" IsEnabled="False" Visibility="Visible">
+                <Grid Grid.Column="1" Grid.Row="1" x:Name="addContentAmbianceGrid" IsEnabled="False" Visibility="Hidden">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -934,8 +934,139 @@
                 </Grid>
             </Grid>
 
-            <Grid Grid.Row="1" x:Name="editContentSubGrid" IsEnabled="False" Visibility="Hidden">
-                
+            <Grid Grid.Row="1" x:Name="editContentSubGrid" IsEnabled="False" Visibility="Visible" Background="LightBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="5*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="5*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="8*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="4*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <ComboBox Grid.Column="1" Grid.Row="1" x:Name="editContentSelectionDropdown" SelectionChanged="EditContentSelectionDropdownChanged" SelectedIndex="0">
+                        </ComboBox>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Column="1" Grid.Row="1" x:Name="editContentMusicGrid" IsEnabled="False" Visibility="Visible">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Column="1" Grid.Row="1" x:Name="editContentMusicOpenFileButton" Click="AddContentOpenFileClick" Content="Select Loop File"></Button>
+
+                    <TextBlock Grid.Column="3" Grid.Row="1" x:Name="editContentMusicOpenFileFeedback" TextWrapping="WrapWithOverflow"></TextBlock>
+
+                    <Button Grid.Column="1" Grid.Row="3" x:Name="editContentMusicIntroOpenFileButton" Click="AddContentOpenFileClick" Content="Select Intro File"></Button>
+
+                    <TextBlock Grid.Column="3" Grid.Row="3" x:Name="editContentMusicIntroOpenFileFeedback" TextWrapping="WrapWithOverflow"></TextBlock>
+
+                    <TextBlock Grid.Row="5" Grid.Column="1" Text="Type a name for your file"></TextBlock>
+
+                    <TextBox Grid.Row="5" Grid.Column="3" x:Name="editContentMusicNameBox" Background="LightGray"></TextBox>
+
+                    <Button Grid.Column="5" Grid.Row="1" Click="EditContentMusicConfirmClick" Content="confirm updates"></Button>
+
+                    <TextBlock Grid.Column="7" Grid.Row="1" x:Name="editContentMusicConfirmFeedback" TextWrapping="Wrap"></TextBlock>
+                </Grid>
+
+                <Grid Grid.Column="1" Grid.Row="1" x:Name="editContentSoundGrid" IsEnabled="False" Visibility="Hidden">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Column="1" Grid.Row="1" x:Name="editContentSoundOpenFileButton" Click="AddContentOpenFileClick" Content="Select sound effect file" ></Button>
+
+                    <TextBlock Grid.Column="3" Grid.Row="1" x:Name="editContentSoundOpenFileFeedback" TextWrapping="Wrap"></TextBlock>
+
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="Type a name for your sound" VerticalAlignment="Bottom" HorizontalAlignment="Center"></TextBlock>
+
+                    <TextBox Grid.Row="4" Grid.Column="1" x:Name="editContentSoundNameBox" Background="LightGray"></TextBox>
+
+                    <Button Grid.Column="5" Grid.Row="1" Click="EditContentSoundConfirmClick" Content="confirm selection"></Button>
+
+                    <TextBlock Grid.Column="7" Grid.Row="1" x:Name="editContentSoundConfirmFeedback" TextWrapping="Wrap"></TextBlock>
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="8*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="4*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <ComboBox Grid.Column="1" Grid.Row="1" x:Name="editContentTypeDropdown" SelectionChanged="EditContentTypeDropdownChanged" SelectedIndex="0">
+                        <ComboBoxItem Name="musicEdit" Content="music"></ComboBoxItem>
+                        <ComboBoxItem Name="soundEdit" Content="sound"></ComboBoxItem>
+                        <ComboBoxItem Name="overlayEdit" Content="overlay"></ComboBoxItem>
+                        <ComboBoxItem Name="iconEdit" Content="icon"></ComboBoxItem>
+                        <ComboBoxItem Name="mapEdit" Content="map"></ComboBoxItem>
+                        <ComboBoxItem Name="ambianceEdit" Content="ambiance"></ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+
             </Grid>
 
             <Grid Grid.Row="1" x:Name="removeContentSubGrid" IsEnabled="False" Visibility="Hidden">

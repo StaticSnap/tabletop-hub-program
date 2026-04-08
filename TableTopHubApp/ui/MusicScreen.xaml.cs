@@ -238,6 +238,8 @@ namespace TableTopHubApp
             {
                 this.addContentAmbianceGrid.IsEnabled = true;
                 this.addContentAmbianceGrid.Visibility = Visibility.Visible;
+
+                this.activeSubSubGrid = this.addContentAmbianceGrid;
             }
             else if(selected == null)
             {
@@ -298,89 +300,192 @@ namespace TableTopHubApp
 
             bool result = false;
 
-            if(sourceButton.Name == "addContentMusicOpenFileButton")
+            switch (sourceButton.Name)
             {
-                result = FileManager.OpenFile("music");
-                if (result == true)
-                {
-                    this.addContentMusicOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
-                }
-                else
-                {
-                    this.addContentMusicOpenFileFeedback.Text = "Error: could not open file";
-                }
+                case "addContentMusicOpenFileButton":
+                    {
+                        result = FileManager.OpenFile("music");
+                        if (result == true)
+                        {
+                            this.addContentMusicOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
+                        }
+                        else
+                        {
+                            this.addContentMusicOpenFileFeedback.Text = "Error: could not open file";
+                        }
 
-                return;
-            }
-            else if (sourceButton.Name == "addContentMusicIntroOpenFileButton")
-            {
-                result = FileManager.OpenIntroFile();
-                if (result == true)
-                {
-                    this.addContentMusicIntroOpenFileFeedback.Text = "Current file: " + FileManager.CurrentIntroPath;
-                }
-                else
-                {
-                    this.addContentMusicIntroOpenFileFeedback.Text = "Error: could not open file";
-                }
+                        break;
+                    }
 
-                return;
-            }
-            else if(sourceButton.Name == "addContentSoundOpenFileButton")
-            {
-                result = FileManager.OpenFile("sound");
-                if (result == true)
-                {
-                    this.addContentSoundOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
-                }
-                else
-                {
-                    this.addContentSoundOpenFileFeedback.Text = "Error: could not open file";
-                }
+                case "editContentMusicOpenFileButton":
+                    {
+                        result = FileManager.OpenFile("music");
+                        if (result == true)
+                        {
+                            this.editContentMusicOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
+                        }
+                        else
+                        {
+                            this.editContentMusicOpenFileFeedback.Text = "Error: could not open file";
+                        }
 
-                return;
-            }
-            else if(sourceButton.Name == "addContentOverlayOpenFileButton")
-            {
-                result = FileManager.OpenFile("overlay");
-                if (result == true)
-                {
-                    this.addContentOverlayOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
-                }
-                else
-                {
-                    this.addContentOverlayOpenFileFeedback.Text = "Error: could not open file";
-                }
+                        break;
+                    }
 
-                return;
-            }
-            else if(sourceButton.Name == "addContentMapOpenFileButton")
-            {
-                result = FileManager.OpenFile("map");
-                if (result == true)
-                {
-                    this.addContentMapOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
-                }
-                else
-                {
-                    this.addContentMapOpenFileFeedback.Text = "Error: could not open file";
-                }
-            }
-            else if(sourceButton.Name == "addContentIconOpenFileButton")
-            {
-                result = FileManager.OpenFile("icon");
-                if (result == true)
-                {
-                    this.addContentIconOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
-                }
-                else
-                {
-                    this.addContentIconOpenFileFeedback.Text = "Error: could not open file";
-                }
-            }
-            else
-            {
-                throw new Exception("unimplemented resource type");
+                case "addContentMusicIntroOpenFileButton":
+                    {
+                        result = FileManager.OpenIntroFile();
+                        if (result == true)
+                        {
+                            this.addContentMusicIntroOpenFileFeedback.Text = "Current file: " + FileManager.CurrentIntroPath;
+                        }
+                        else
+                        {
+                            this.addContentMusicIntroOpenFileFeedback.Text = "Error: could not open file";
+                        }
+
+                        break;
+                    }
+
+                case "editContentMusicIntroOpenFileButton":
+                    {
+                        result = FileManager.OpenIntroFile();
+                        if (result == true)
+                        {
+                            this.editContentMusicIntroOpenFileFeedback.Text = "Current file: " + FileManager.CurrentIntroPath;
+                        }
+                        else
+                        {
+                            this.editContentMusicIntroOpenFileFeedback.Text = "Error: could not open file";
+                        }
+
+                        break;
+                    }
+
+                case "addContentSoundOpenFileButton":
+                    {
+                        result = FileManager.OpenFile("sound");
+                        if (result == true)
+                        {
+                            this.addContentSoundOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
+                        }
+                        else
+                        {
+                            this.addContentSoundOpenFileFeedback.Text = "Error: could not open file";
+                        }
+
+                        break;
+                    }
+
+                case "editContentSoundOpenFileButton":
+                    {
+                        result = FileManager.OpenFile("sound");
+                        if (result == true)
+                        {
+                            this.editContentSoundOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
+                        }
+                        else
+                        {
+                            this.editContentSoundOpenFileFeedback.Text = "Error: could not open file";
+                        }
+
+                        break;
+                    }
+
+                case "addContentOverlayOpenFileButton":
+                    {
+                        result = FileManager.OpenFile("overlay");
+                        if (result == true)
+                        {
+                            this.addContentOverlayOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
+                        }
+                        else
+                        {
+                            this.addContentOverlayOpenFileFeedback.Text = "Error: could not open file";
+                        }
+
+                        break;
+                    }
+
+                case "editContentOverlayOpenFileButton":
+                    {
+                        result = FileManager.OpenFile("overlay");
+                        if (result == true)
+                        {
+                            //this.editContentOverlayOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
+                        }
+                        else
+                        {
+                            //this.editContentOverlayOpenFileFeedback.Text = "Error: could not open file";
+                        }
+
+                        break;
+                    }
+
+                case "addContentMapOpenFileButton":
+                    {
+                        result = FileManager.OpenFile("map");
+                        if (result == true)
+                        {
+                            this.addContentMapOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
+                        }
+                        else
+                        {
+                            this.addContentMapOpenFileFeedback.Text = "Error: could not open file";
+                        }
+
+                        break;
+                    }
+
+                case "editContentMapOpenFileButton":
+                    {
+                        result = FileManager.OpenFile("map");
+                        if (result == true)
+                        {
+                            //this.editContentMapOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
+                        }
+                        else
+                        {
+                            //this.editContentMapOpenFileFeedback.Text = "Error: could not open file";
+                        }
+
+                        break;
+                    }
+
+                case "addContentIconOpenFileButton":
+                    {
+                        result = FileManager.OpenFile("icon");
+                        if (result == true)
+                        {
+                            this.addContentIconOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
+                        }
+                        else
+                        {
+                            this.addContentIconOpenFileFeedback.Text = "Error: could not open file";
+                        }
+
+                        break;
+                    }
+
+                case "editContentIconOpenFileButton":
+                    {
+                        result = FileManager.OpenFile("icon");
+                        if (result == true)
+                        {
+                            //this.editContentIconOpenFileFeedback.Text = "Current file: " + FileManager.CurrentFilePath;
+                        }
+                        else
+                        {
+                            //this.editContentIconOpenFileFeedback.Text = "Error: could not open file";
+                        }
+
+                        break;
+                    }
+
+                default:
+                    {
+                        throw new Exception("unimplemented resource type");
+                    }
             }
         }
 
@@ -745,6 +850,234 @@ namespace TableTopHubApp
             }
             
             //TODO
+        }
+
+        private void EditContentTypeDropdownChanged(object sender, RoutedEventArgs e)
+        {
+            string selected = this.editContentTypeDropdown.SelectedValue.ToString();
+
+            this.activeSubSubGrid.IsEnabled = false;
+            this.activeSubSubGrid.Visibility = Visibility.Hidden;
+
+            this.ContentClearAll();
+
+            switch (selected)
+            {
+                case "System.Windows.Controls.ComboBoxItem: music":
+                    {
+                        this.editContentMusicGrid.IsEnabled = true;
+                        this.editContentMusicGrid.Visibility = Visibility.Visible;
+
+                        this.activeSubSubGrid = this.editContentMusicGrid;
+
+                        this.EditContentUpdateDropdown("music");
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: sound":
+                    {
+                        this.editContentSoundGrid.IsEnabled = true;
+                        this.editContentSoundGrid.Visibility = Visibility.Visible;
+
+                        this.activeSubSubGrid = this.editContentSoundGrid;
+
+                        this.EditContentUpdateDropdown("sound");
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: overlay":
+                    {
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: icon":
+                    {
+                        
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: map":
+                    {
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: ambiance":
+                    {
+                        break;
+                    }
+
+                default:
+                    {
+                        break;
+                    }
+            }
+                
+        }
+
+        private void EditContentUpdateDropdown(string type)
+        {
+            this.editContentSelectionDropdown.DisplayMemberPath = "Name";
+            this.editContentSelectionDropdown.SelectedValuePath = "Id";
+            switch (type)
+            {
+                case "music":
+                    {
+                        this.editContentSelectionDropdown.ItemsSource = AudioManager.GetTracks();
+                        break;
+                    }
+
+                case "sound":
+                    {
+                        this.editContentSelectionDropdown.ItemsSource = AudioManager.GetSoundEffects();
+                        break;
+                    }
+
+                case "overlay":
+                    {
+                        this.editContentSelectionDropdown.ItemsSource = OverlayManager.GetOverlays();
+                        break;
+                    }
+
+                case "icon":
+                    {
+                        this.editContentSelectionDropdown.ItemsSource = MapManager.GetIcons();
+                        break;
+                    }
+
+                case "map":
+                    {
+                        this.editContentSelectionDropdown.ItemsSource = MapManager.GetMaps();
+                        break;
+                    }
+
+                case "ambiance":
+                    {
+                        break;
+                    }
+            }
+
+            this.editContentSelectionDropdown.SelectedIndex = 0;
+        }
+
+        private void EditContentSelectionDropdownChanged(object sender, RoutedEventArgs e)
+        {
+            if(this.editContentSelectionDropdown.SelectedValue == null)
+            {
+                return;
+            }
+
+            switch (this.editContentTypeDropdown.SelectedValue.ToString())
+            {
+                case "System.Windows.Controls.ComboBoxItem: music":
+                    {
+                        string[] songPaths = AudioManager.GetTrackPath(this.editContentSelectionDropdown.SelectedValue.ToString());
+                        FileManager.CurrentFilePath = songPaths[0];
+                        FileManager.CurrentIntroPath = songPaths[1];
+
+                        this.editContentMusicOpenFileFeedback.Text = "Current file: " + songPaths[0];
+                        this.editContentMusicIntroOpenFileFeedback.Text = "Current file: " + songPaths[1];
+
+                        this.editContentMusicNameBox.Text = AudioManager.GetTrackTitle(this.editContentSelectionDropdown.SelectedValue.ToString());
+
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: sound":
+                    {
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: overlay":
+                    {
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: icon":
+                    {
+
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: map":
+                    {
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: ambiance":
+                    {
+                        break;
+                    }
+
+                default:
+                    {
+                        break;
+                    }
+            }
+
+        }
+
+        private void EditContentMusicConfirmClick(object sender, RoutedEventArgs e)
+        {
+            string[] data = new string[3];
+
+            if (this.editContentMusicNameBox.Text.Length > 0)
+            {
+                data[0] = this.editContentMusicNameBox.Text;
+                if (data[0].Contains(','))
+                {
+                    this.addContentIconConfirmFeedback.Text = "Error: names may not contain the character ','";
+                    return;
+                }
+            }
+            else
+            {
+                this.editContentMusicConfirmFeedback.Text = "Error: no track name provided";
+                return;
+            }
+
+            if (FileManager.CurrentFilePath != string.Empty)
+            {
+                data[1] = Path.GetFileName(FileManager.CurrentFilePath);
+            }
+            else
+            {
+                this.editContentMusicConfirmFeedback.Text = "Error: no loop file selected";
+                return;
+            }
+
+            if (FileManager.CurrentIntroPath != string.Empty)
+            {
+                data[2] = Path.GetFileName(FileManager.CurrentIntroPath);
+            }
+            else
+            {
+                data[2] = "NULL";
+            }
+
+            FileManager.CopyFile("music");
+            if (data[2] != "NULL")
+            {
+                FileManager.CopyFile("intro");
+            }
+
+            FileManager.AddData("music", data,this.editContentSelectionDropdown.SelectedValue.ToString());
+            this.ContentClearAll();
+            this.editContentMusicConfirmFeedback.Text = "Successfully updated!";
+            AudioManager.InitTracks();
+            this.musicOptions.ItemsSource = AudioManager.GetTracks();
+            this.musicOptions.DisplayMemberPath = "Name";
+            this.musicOptions.SelectedValuePath = "Id";
+            this.musicOptions.SelectedIndex = 0;
+
+            this.editContentSelectionDropdown.DisplayMemberPath = "Name";
+            this.editContentSelectionDropdown.SelectedValuePath = "Id";
+            this.editContentSelectionDropdown.ItemsSource = AudioManager.GetTracks();
+            this.editContentSelectionDropdown.SelectedIndex = 0;
+        }
+
+        private void EditContentSoundConfirmClick(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void PlayMusicClick(object sender, RoutedEventArgs e)
