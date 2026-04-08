@@ -1210,7 +1210,69 @@
 
             
             <Grid Grid.Row="1" x:Name="removeContentSubGrid" IsEnabled="False" Visibility="Visible" Background="PaleVioletRed">
-                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="5*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="8*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="4*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <ComboBox Grid.Column="1" Grid.Row="1" x:Name="removeContentTypeDropdown" SelectionChanged="RemoveContentTypeDropdownChanged" SelectedIndex="0">
+                        <ComboBoxItem Name="musicRemove" Content="music"></ComboBoxItem>
+                        <ComboBoxItem Name="soundRemove" Content="sound"></ComboBoxItem>
+                        <ComboBoxItem Name="overlayRemove" Content="overlay"></ComboBoxItem>
+                        <ComboBoxItem Name="iconRemove" Content="icon"></ComboBoxItem>
+                        <ComboBoxItem Name="mapRemove" Content="map"></ComboBoxItem>
+                        <ComboBoxItem Name="ambianceRemove" Content="ambiance"></ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="4*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="4*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Button Grid.Column="1" Grid.Row="1"  Click="RemoveButtonDeleteClicked" Content="DESTORY" Background="DarkRed" ></Button>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="8*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="5*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <ComboBox Grid.Column="1" Grid.Row="0" x:Name="removeContentSelectionDropdown" SelectedIndex="0">
+                    </ComboBox>
+                </Grid>
+
             </Grid>
         </Grid>
 

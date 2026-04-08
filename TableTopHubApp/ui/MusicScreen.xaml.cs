@@ -317,9 +317,99 @@ namespace TableTopHubApp
             this.editContentMapWidthBox.Text = string.Empty;
             this.editContentMapHeightBox.Text = string.Empty;
             this.editContentMapConfirmFeedback.Text = string.Empty;
+        }
 
-            // remove section
+        private void ListReread()
+        {
+            OverlayManager.InitAssets();
+            MapManager.InitMaps();
+            AudioManager.InitTracks();
 
+            this.musicOptions.ItemsSource = AudioManager.GetTracks();
+            this.soundOptions.ItemsSource = AudioManager.GetSoundEffects();
+            this.overlayOptions.ItemsSource = OverlayManager.GetOverlays();
+            this.iconOptions.ItemsSource = MapManager.GetIcons();
+            this.mapOptions.ItemsSource = MapManager.GetMaps();
+
+            string type = this.removeContentTypeDropdown.SelectedValue.ToString();
+
+            switch (type)
+            {
+                case "System.Windows.Controls.ComboBoxItem: music":
+                    {
+                        this.removeContentSelectionDropdown.ItemsSource = AudioManager.GetTracks();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: sound":
+                    {
+                        this.removeContentSelectionDropdown.ItemsSource = AudioManager.GetSoundEffects();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: overlay":
+                    {
+                        this.removeContentSelectionDropdown.ItemsSource = OverlayManager.GetOverlays();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: icon":
+                    {
+                        this.removeContentSelectionDropdown.ItemsSource = MapManager.GetIcons();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: map":
+                    {
+                        this.removeContentSelectionDropdown.ItemsSource = MapManager.GetMaps();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: ambiance":
+                    {
+                        break;
+                    }
+            }
+
+            type = this.editContentTypeDropdown.SelectedValue.ToString();
+
+            switch (type)
+            {
+                case "System.Windows.Controls.ComboBoxItem: music":
+                    {
+                        this.editContentSelectionDropdown.ItemsSource = AudioManager.GetTracks();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: sound":
+                    {
+                        this.editContentSelectionDropdown.ItemsSource = AudioManager.GetSoundEffects();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: overlay":
+                    {
+                        this.editContentSelectionDropdown.ItemsSource = OverlayManager.GetOverlays();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: icon":
+                    {
+                        this.editContentSelectionDropdown.ItemsSource = MapManager.GetIcons();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: map":
+                    {
+                        this.editContentSelectionDropdown.ItemsSource = MapManager.GetMaps();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: ambiance":
+                    {
+                        break;
+                    }
+            }
         }
 
         private void AddContentOpenFileClick(object sender, RoutedEventArgs e)
@@ -1155,16 +1245,7 @@ namespace TableTopHubApp
             FileManager.AddData("music", data, this.editContentSelectionDropdown.SelectedValue.ToString());
             this.ContentClearAll();
             this.editContentMusicConfirmFeedback.Text = "Successfully updated!";
-            AudioManager.InitTracks();
-            this.musicOptions.ItemsSource = AudioManager.GetTracks();
-            this.musicOptions.DisplayMemberPath = "Name";
-            this.musicOptions.SelectedValuePath = "Id";
-            this.musicOptions.SelectedIndex = 0;
-
-            this.editContentSelectionDropdown.DisplayMemberPath = "Name";
-            this.editContentSelectionDropdown.SelectedValuePath = "Id";
-            this.editContentSelectionDropdown.ItemsSource = AudioManager.GetTracks();
-            this.editContentSelectionDropdown.SelectedIndex = 0;
+            this.ListReread();
         }
 
         private void EditContentSoundConfirmClick(object sender, RoutedEventArgs e)
@@ -1201,18 +1282,7 @@ namespace TableTopHubApp
             FileManager.AddData("sound", data, this.editContentSelectionDropdown.SelectedValue.ToString());
             this.ContentClearAll();
             this.editContentSoundConfirmFeedback.Text = "Successfully updated!";
-            AudioManager.InitTracks();
-
-            this.soundOptions.ItemsSource = StorageManager.GetAllSoundEntries();
-            this.soundOptions.DisplayMemberPath = "Name";
-            this.soundOptions.SelectedValuePath = "Id";
-            this.soundOptions.SelectedIndex = 0;
-            this.soundOptions.SelectedIndex = 0;
-
-            this.editContentSelectionDropdown.DisplayMemberPath = "Name";
-            this.editContentSelectionDropdown.SelectedValuePath = "Id";
-            this.editContentSelectionDropdown.ItemsSource = StorageManager.GetAllSoundEntries();
-            this.editContentSelectionDropdown.SelectedIndex = 0;
+            this.ListReread();
         }
 
         private void EditContentIconConfirmClick(object sender, RoutedEventArgs e)
@@ -1312,16 +1382,7 @@ namespace TableTopHubApp
             FileManager.AddData("icon", data, this.editContentSelectionDropdown.SelectedValue.ToString());
             this.ContentClearAll();
             this.editContentIconConfirmFeedback.Text = "Successfully added!";
-            MapManager.InitMaps();
-            this.iconOptions.ItemsSource = MapManager.GetIcons();
-            this.iconOptions.DisplayMemberPath = "Name";
-            this.iconOptions.SelectedValuePath = "Id";
-            this.iconOptions.SelectedIndex = 0;
-
-            this.editContentSelectionDropdown.DisplayMemberPath = "Name";
-            this.editContentSelectionDropdown.SelectedValuePath = "Id";
-            this.editContentSelectionDropdown.ItemsSource = StorageManager.GetAllIconEntries();
-            this.editContentSelectionDropdown.SelectedIndex = 0;
+            this.ListReread();
         }
 
         private void EditContentOverlayConfirmClick(object sender, RoutedEventArgs e)
@@ -1369,16 +1430,7 @@ namespace TableTopHubApp
             FileManager.AddData("overlay", data, this.editContentSelectionDropdown.SelectedValue.ToString());
             this.ContentClearAll();
             this.editContentOverlayConfirmFeedback.Text = "Successfully added!";
-            OverlayManager.InitAssets();
-            this.overlayOptions.ItemsSource = OverlayManager.GetOverlays();
-            this.overlayOptions.DisplayMemberPath = "Name";
-            this.overlayOptions.SelectedValuePath = "Id";
-            this.overlayOptions.SelectedIndex = 0;
-
-            this.editContentSelectionDropdown.DisplayMemberPath = "Name";
-            this.editContentSelectionDropdown.SelectedValuePath = "Id";
-            this.editContentSelectionDropdown.ItemsSource = StorageManager.GetAllOverlayEntries();
-            this.editContentSelectionDropdown.SelectedIndex = 0;
+            this.ListReread();
         }
 
         private void EditContentMapConfirmClick(object sender, RoutedEventArgs e)
@@ -1468,16 +1520,70 @@ namespace TableTopHubApp
             FileManager.AddData("map", data, this.editContentSelectionDropdown.SelectedValue.ToString());
             this.ContentClearAll();
             this.editContentMapConfirmFeedback.Text = "Successfully added!";
-            MapManager.InitMaps();
-            this.mapOptions.ItemsSource = MapManager.GetMaps();
-            this.mapOptions.DisplayMemberPath = "Name";
-            this.mapOptions.SelectedValuePath = "Id";
-            this.mapOptions.SelectedIndex = 0;
+            this.ListReread();
+        }
 
-            this.editContentSelectionDropdown.DisplayMemberPath = "Name";
-            this.editContentSelectionDropdown.SelectedValuePath = "Id";
-            this.editContentSelectionDropdown.ItemsSource = StorageManager.GetAllMapEntries();
-            this.editContentSelectionDropdown.SelectedIndex = 0;
+        private void RemoveContentTypeDropdownChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.removeContentTypeDropdown == null || this.removeContentSelectionDropdown == null)
+            {
+                return;
+            }
+
+            this.removeContentSelectionDropdown.DisplayMemberPath = "Name";
+            this.removeContentSelectionDropdown.SelectedValuePath = "Id";
+
+            string type = this.removeContentTypeDropdown.SelectedValue.ToString();
+
+            switch (type)
+            {
+                case "System.Windows.Controls.ComboBoxItem: music":
+                    {
+                        this.removeContentSelectionDropdown.ItemsSource = AudioManager.GetTracks();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: sound":
+                    {
+                        this.removeContentSelectionDropdown.ItemsSource = AudioManager.GetSoundEffects();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: overlay":
+                    {
+                        this.removeContentSelectionDropdown.ItemsSource = OverlayManager.GetOverlays();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: icon":
+                    {
+                        this.removeContentSelectionDropdown.ItemsSource = MapManager.GetIcons();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: map":
+                    {
+                        this.removeContentSelectionDropdown.ItemsSource = MapManager.GetMaps();
+                        break;
+                    }
+
+                case "System.Windows.Controls.ComboBoxItem: ambiance":
+                    {
+                        break;
+                    }
+            }
+
+            this.removeContentSelectionDropdown.SelectedIndex = 0;
+        }
+
+        private void RemoveButtonDeleteClicked(object sender, RoutedEventArgs e)
+        {
+            string? id = this.removeContentSelectionDropdown.SelectedValue.ToString();
+
+            StorageManager.DeleteObject(id);
+
+            this.ContentClearAll();
+            this.ListReread();
         }
 
         private void PlayMusicClick(object sender, RoutedEventArgs e)
