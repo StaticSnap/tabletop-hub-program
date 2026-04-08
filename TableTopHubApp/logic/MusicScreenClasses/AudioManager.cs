@@ -81,6 +81,20 @@ namespace TableTopHubApp
             }
         }
 
+        public static string GetSoundTitle(string soundId)
+        {
+            SoundEffect soundData = StorageManager.LoadSoundObject(soundId);
+
+            if (soundData == null)
+            {
+                throw new Exception("Sound not found");
+            }
+            else
+            {
+                return soundData.Name;
+            }
+        }
+
         /// <summary>
         /// Takes a sond effect and gets its corresponding file path.
         /// </summary>

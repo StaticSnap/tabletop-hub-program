@@ -41,6 +41,46 @@ namespace TableTopHubApp
         }
 
         /// <summary>
+        /// Helper function for the UI to fecth the file path for an overlay top display.
+        /// </summary>
+        /// <param name="id">The id of the overlay to find.</param>
+        /// <returns>The absolute file path of the overlay.</returns>
+        /// <exception cref="Exception">Storage cannot find the desired overlay.</exception>
+        public static string GetOverlayPath(string id)
+        {
+            Overlay? overlayData = StorageManager.LoadOverlayObject(id);
+
+            if(overlayData == null)
+            {
+                throw new Exception("Overlay not found");
+            }
+            else
+            {
+                return overlayData.FilePath;
+            }
+        }
+
+        /// <summary>
+        /// Helper function for the UI to fetch the name for an overlay using its id.
+        /// </summary>
+        /// <param name="id">The id of the overlay to find.</param>
+        /// <returns>The name of the overlay.</returns>
+        /// <exception cref="Exception">Storage cannot find the desired overlay.</exception>
+        public static string GetOverlayName(string id)
+        {
+            Overlay? overlayData = StorageManager.LoadOverlayObject(id);
+
+            if (overlayData == null)
+            {
+                throw new Exception("Overlay not found");
+            }
+            else
+            {
+                return overlayData.Name;
+            }
+        }
+
+        /// <summary>
         /// Gets all of the manifest entries for the Overlays.
         /// </summary>
         /// <returns>List of manifest entries.</returns>

@@ -934,7 +934,7 @@
                 </Grid>
             </Grid>
 
-            <Grid Grid.Row="1" x:Name="editContentSubGrid" IsEnabled="False" Visibility="Visible" Background="LightBlue">
+            <Grid Grid.Row="1" x:Name="editContentSubGrid" IsEnabled="False" Visibility="Hidden" Background="LightBlue">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -970,7 +970,7 @@
                     </Grid>
                 </Grid>
 
-                <Grid Grid.Column="1" Grid.Row="1" x:Name="editContentMusicGrid" IsEnabled="False" Visibility="Visible">
+                <Grid Grid.Column="1" Grid.Row="1" x:Name="editContentMusicGrid" IsEnabled="False" Visibility="Hidden">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="5*"></ColumnDefinition>
@@ -1044,6 +1044,145 @@
                     <TextBlock Grid.Column="7" Grid.Row="1" x:Name="editContentSoundConfirmFeedback" TextWrapping="Wrap"></TextBlock>
                 </Grid>
 
+                <Grid Grid.Column="1" Grid.Row="1" x:Name="editContentIconGrid" IsEnabled="False" Visibility="Hidden">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="5*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Column="1" Grid.Row="1" x:Name="editContentIconOpenFileButton" Click="AddContentOpenFileClick" Content="Select icon file"></Button>
+
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Type a name for your icon" VerticalAlignment="Bottom" HorizontalAlignment="Center"></TextBlock>
+
+                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="editContentIconNameBox" Background="LightGray"></TextBox>
+
+                    <TextBlock Grid.Row="4" Grid.Column="1" Text="Type the stats of your icon" VerticalAlignment="Bottom" HorizontalAlignment="Center"></TextBlock>
+
+                    <TextBox Grid.Row="5" Grid.Column="1" x:Name="editContentIconStatsBox" Background="LightGray"></TextBox>
+
+                    <TextBlock Grid.Row="2" Grid.Column="3" Text="Type the attacks of your icon" VerticalAlignment="Bottom" HorizontalAlignment="Center"></TextBlock>
+
+                    <TextBox Grid.Row="3" Grid.Column="3" x:Name="editContentIconAttacksBox" Background="LightGray"></TextBox>
+
+                    <TextBlock Grid.Column="3" Grid.Row="1" x:Name="editContentIconOpenFileFeedback" TextWrapping="Wrap"></TextBlock>
+
+                    <Button Grid.Column="5" Grid.Row="1" Click="EditContentIconConfirmClick" Content="confirm selection"></Button>
+
+                    <TextBlock Grid.Column="7" Grid.Row="1" x:Name="editContentIconConfirmFeedback" TextWrapping="Wrap"></TextBlock>
+
+                    <Grid Grid.Row="5" Grid.Column="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="7*"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="7*"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="7*"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Width:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="editContentIconWidthBox" Background="LightGray"></TextBox>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Height:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <TextBox Grid.Row="2" Grid.Column="1" x:Name="editContentIconHeightBox" Background="LightGray"></TextBox>
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Max HP:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <TextBox Grid.Row="4" Grid.Column="1" x:Name="editContentIconHealthBox" Background="LightGray"></TextBox>
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Column="1" Grid.Row="1" x:Name="editContentOverlayGrid" IsEnabled="False" Visibility="Hidden">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Column="0" Grid.Row="0" x:Name="editContentOverlayOpenFileButton"  Margin="30" Click="AddContentOpenFileClick" Content="Select overlay file"></Button>
+
+                    <TextBlock Grid.Column="1" x:Name="editContentOverlayOpenFileFeedback" Margin="40" TextWrapping="Wrap"></TextBlock>
+
+                    <TextBlock Grid.Row="2" Margin="40" Text="Type a name for your overlay"></TextBlock>
+
+                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="editContentOverlayNameBox" Margin="30" Background="LightGray"></TextBox>
+
+                    <Button Grid.Column="2" Grid.Row="0" Margin="40" Click="EditContentOverlayConfirmClick" Content="confirm selection"></Button>
+
+                    <TextBlock Grid.Column="3" x:Name="editContentOverlayConfirmFeedback" Margin="40" TextWrapping="Wrap"></TextBlock>
+                </Grid>
+
+                <Grid Grid.Column="1" Grid.Row="1" x:Name="editContentMapGrid" IsEnabled="False" Visibility="Hidden">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Button Grid.Column="0" Grid.Row="0" x:Name="editContentMapOpenFileButton"  Margin="30" Click="AddContentOpenFileClick" Content="Select map file"></Button>
+
+                    <TextBlock Grid.Column="1" x:Name="editContentMapOpenFileFeedback" Margin="40" TextWrapping="Wrap"></TextBlock>
+
+                    <TextBlock Grid.Row="2" Margin="40" Text="Type a name for your map"></TextBlock>
+
+                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="editContentMapNameBox" Margin="30" Background="LightGray"></TextBox>
+
+                    <Button Grid.Column="2" Grid.Row="0" Margin="40" Click="EditContentMapConfirmClick" Content="confirm selection"></Button>
+
+                    <TextBlock Grid.Column="3" x:Name="editContentMapConfirmFeedback" Margin="40" TextWrapping="Wrap"></TextBlock>
+
+                    <Grid Grid.Row="2" Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Width:" Margin=" 20"></TextBlock>
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="editContentMapWidthBox" Background="LightGray" Margin="30"></TextBox>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Height:" Margin="20"></TextBlock>
+                        <TextBox Grid.Row="1" Grid.Column="1" x:Name="editContentMapHeightBox" Background="LightGray" Margin="30"></TextBox>
+
+
+                    </Grid>
+                </Grid>
+
+
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -1069,7 +1208,8 @@
 
             </Grid>
 
-            <Grid Grid.Row="1" x:Name="removeContentSubGrid" IsEnabled="False" Visibility="Hidden">
+            
+            <Grid Grid.Row="1" x:Name="removeContentSubGrid" IsEnabled="False" Visibility="Visible" Background="PaleVioletRed">
                 
             </Grid>
         </Grid>
