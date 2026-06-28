@@ -6,6 +6,7 @@ namespace TableTopHubApp
 {
     using System.Diagnostics;
     using SFML.Audio;
+    using TableTopHubApp.ui;
 
     /// <summary>
     /// Handles the threading to play and stop music and sound effects.
@@ -18,8 +19,10 @@ namespace TableTopHubApp
         private static Sound music = new Sound();
         private static Sound soundEffect = new Sound();
         private static CancellationTokenSource? cancelTok;
+        private static CancellationTokenSource? cancelTokAmb;
         private static float musicVolume = 50;
         private static float soundeffectVolume = 50;
+        private static float ambianceVolume = 50;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AudioPlayer"/> class.
@@ -98,6 +101,77 @@ namespace TableTopHubApp
         public static void PrepSoundEffectWorker(string title)
         {
             Task.Run(() => PlaySoundEffect(title));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data">The list of Ambiance data.</param>
+        public static void PrepAmbianceWorkers(List<AmbianceData> data)
+        {
+            cancelTokAmb?.Cancel();
+
+            cancelTokAmb = new CancellationTokenSource();
+
+            for(int i = 0; i < data.Count; i++)
+            {
+                var amb = data[i];
+                Task.Run(() => PlayAmbiance(amb, cancelTokAmb.Token));
+            }
+        }
+
+        private static void PlayAmbiance(AmbianceData data, CancellationToken tok)
+        {
+            string? audioPath = null;
+            if (AudioManager.GetTrackPath(data.Id) != null)
+            {
+                audioPath = AudioManager.GetTrackPath(data.Id)[0];
+            }
+
+            if(audioPath == null)
+            {
+                audioPath = AudioManager.GetSoundEffectPath(data.Id);
+            }
+
+            if(audioPath == null)
+            {
+                //audio not found
+                Debug.WriteLine(Task.CurrentId.ToString() + ": Audio not found");
+                return;
+            }
+
+            SoundBuffer snd = new SoundBuffer(audioPath);
+            Sound sound = new Sound(snd);
+            if (data.Looping)
+            {
+                sound.Loop = true;
+                sound.Play();
+                Debug.WriteLine(Task.CurrentId.ToString() + ": Playing looping audio.");
+            }
+
+            sound.Volume = (ambianceVolume / 100) * ((float)data.Volume / 100) * 100;
+            while (!tok.IsCancellationRequested)
+            {
+                // Note looping ambiance does not ever stop playing so it doesn't go through any of this.
+                // This is by design.
+                if(sound.Status != SoundStatus.Playing)
+                {
+                    Debug.WriteLine(Task.CurrentId.ToString() + ": Restart sound!");
+                    if (data.Fluctuating)
+                    {
+                        sound.Pitch = 1f + (float)((Random.Shared.NextDouble() - 0.5) * data.Variance/100);
+                        sound.Volume = ((ambianceVolume / 100) * ((float)data.Volume / 100) * 100) + ((float)((Random.Shared.NextDouble() - 0.5) * data.Variance / 100) * 100);
+                    }
+
+                    float baseDelay = (float)(-(1000 / (data.Frequency - 103)) - 9);
+                    Debug.WriteLine(Task.CurrentId.ToString() + ": Waiting:" + baseDelay);
+                    Task.Delay((int)(1000 * baseDelay * (Random.Shared.NextDouble() + 0.5))).Wait();
+                    sound.Play();
+                }
+            }
+
+            sound.Stop();
+            sound.Dispose();
         }
 
         /// <summary>

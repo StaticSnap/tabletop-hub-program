@@ -49,13 +49,13 @@ namespace TableTopHubApp
         /// <param name="trackId">id of the track.</param>
         /// <returns>string path formatted to be ready to use.</returns>
         /// <exception cref="Exception">if function is called on a track that is not in the data then raise an exception.</exception>
-        public static string[] GetTrackPath(string trackId)
+        public static string[]? GetTrackPath(string trackId)
         {
             Track? trackData = StorageManager.LoadTrackObject(trackId);
 
             if (trackData == null)
             {
-                throw new Exception("song not found");
+                return null;
             }
             else if(trackData.IntroPath == "NULL")
             {
@@ -101,13 +101,13 @@ namespace TableTopHubApp
         /// <param name="soundEffectId">Id of the sound.</param>
         /// <returns>formatted file path.</returns>
         /// <exception cref="Exception">if given a name that the manager does not recognize. throw an exception.</exception>
-        public static string GetSoundEffectPath(string soundEffectId)
+        public static string? GetSoundEffectPath(string soundEffectId)
         {
             SoundEffect? soundData = StorageManager.LoadSoundObject(soundEffectId);
 
             if (soundData == null)
             {
-                throw new Exception("sound not found");
+                return null;
             }
 
             return Path.Combine(Directory.GetCurrentDirectory(), "resources\\soundEffectsFolder\\", soundData.FilePath);

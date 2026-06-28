@@ -316,7 +316,7 @@
                 <Button Grid.Column="5" Grid.Row="1" x:Name="removeContentButton" Click="AddContentSubScreenChange" Content="Remove" Background="PaleVioletRed"></Button>
             </Grid>
 
-            <Grid Grid.Row="1" x:Name="addContentSubGrid" IsEnabled="False" Visibility="Visible" Background="PaleGreen">
+            <Grid Grid.Row="1" x:Name="addContentSubGrid" IsEnabled="False" Visibility="Hidden" Background="PaleGreen">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -538,7 +538,7 @@
                     </Grid>
                 </Grid>
 
-                <Grid Grid.Column="1" Grid.Row="1" x:Name="addContentAmbianceGrid" IsEnabled="False" Visibility="Visible">
+                <Grid Grid.Column="1" Grid.Row="1" x:Name="addContentAmbianceGrid" IsEnabled="False" Visibility="Hidden">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>

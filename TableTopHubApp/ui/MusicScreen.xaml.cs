@@ -983,7 +983,13 @@ namespace TableTopHubApp
 
         private void AddContentAmbianceTestClick(object sender, RoutedEventArgs e)
         {
-            // TODO
+            List<AmbianceData> data = new List<AmbianceData>();
+            for(int i = 0; i < this.AddContentAmbianceStackPanel.Children.Count - 1; i++)
+            {
+                data.Add(((AmbianceSettings)this.AddContentAmbianceStackPanel.Children[i]).ReadData());
+            }
+
+            AudioPlayer.PrepAmbianceWorkers(data);
         }
 
         private void AddContentAmbianceConfirmClick(object sender, RoutedEventArgs e)
