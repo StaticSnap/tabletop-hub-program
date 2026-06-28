@@ -8,6 +8,7 @@ namespace TableTopHubApp
     using System.IO;
     using System.Windows;
     using System.Windows.Controls;
+    using TableTopHubApp.ui;
 
     /// <summary>
     /// The music screen contains UI elements to interact with the other two screens of the program
@@ -62,6 +63,7 @@ namespace TableTopHubApp
             this.mapOptions.SelectedValuePath = "Id";
             this.mapOptions.SelectedIndex = 0;
 
+            /*
             this.AddContentAmbianceOptions.ItemsSource = AudioManager.GetSoundEffects();
             this.AddContentAmbianceOptions.DisplayMemberPath = "Name";
             this.AddContentAmbianceOptions.SelectedValuePath = "Id";
@@ -86,6 +88,15 @@ namespace TableTopHubApp
             this.AddContentAmbianceOptions4.DisplayMemberPath = "Name";
             this.AddContentAmbianceOptions4.SelectedValuePath = "Id";
             this.AddContentAmbianceOptions4.SelectedIndex = 0;
+            */
+
+            this.editContentSelectionDropdown.DisplayMemberPath = "Name";
+            this.editContentSelectionDropdown.SelectedValuePath = "Id";
+            this.editContentSelectionDropdown.SelectedIndex = 0;
+
+            this.removeContentSelectionDropdown.DisplayMemberPath = "Name";
+            this.removeContentSelectionDropdown.SelectedValuePath = "Id";
+            this.removeContentSelectionDropdown.SelectedIndex = 0;
 
             this.activeGrid = this.mainGrid;
 
@@ -102,6 +113,7 @@ namespace TableTopHubApp
         {
             // Ensure that screen is properly reset.
             this.ContentClearAll();
+            this.ListReread();
 
             // Get data on button that flagged event.
             Button sourceButton = new Button();
@@ -962,7 +974,14 @@ namespace TableTopHubApp
             this.mapOptions.SelectedIndex = 0;
         }
 
-        private void AddContentAmbianceClearClick(object sender, RoutedEventArgs e)
+        private void AddContentAmbianceAddElementClick(object sender, RoutedEventArgs e)
+        {
+            var newAmb = new AmbianceSettings();
+            newAmb.Height = 150;
+            this.AddContentAmbianceStackPanel.Children.Insert(this.AddContentAmbianceStackPanel.Children.Count - 1, newAmb);
+        }
+
+        private void AddContentAmbianceTestClick(object sender, RoutedEventArgs e)
         {
             // TODO
         }

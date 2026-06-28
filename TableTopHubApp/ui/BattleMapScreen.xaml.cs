@@ -79,7 +79,7 @@ namespace TableTopHubApp
                 int val = 0;
 
                 // Only change health if both the selected element is a creature icon and if the string input can be parsed.
-                if (this.selectedElement.GetType() == typeof(CreatureIcon) && int.TryParse(healthVal, out val))
+                if (this.selectedElement != null && this.selectedElement.GetType() == typeof(CreatureIcon) && int.TryParse(healthVal, out val))
                 {
                     ((CreatureIcon)this.selectedElement).UpdateHealth(val);
                 }

@@ -316,7 +316,7 @@
                 <Button Grid.Column="5" Grid.Row="1" x:Name="removeContentButton" Click="AddContentSubScreenChange" Content="Remove" Background="PaleVioletRed"></Button>
             </Grid>
 
-            <Grid Grid.Row="1" x:Name="addContentSubGrid" IsEnabled="False" Visibility="Hidden" Background="PaleGreen">
+            <Grid Grid.Row="1" x:Name="addContentSubGrid" IsEnabled="False" Visibility="Visible" Background="PaleGreen">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -538,7 +538,7 @@
                     </Grid>
                 </Grid>
 
-                <Grid Grid.Column="1" Grid.Row="1" x:Name="addContentAmbianceGrid" IsEnabled="False" Visibility="Hidden">
+                <Grid Grid.Column="1" Grid.Row="1" x:Name="addContentAmbianceGrid" IsEnabled="False" Visibility="Visible">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -550,337 +550,22 @@
                     <Grid>
                         <ScrollViewer>
                             <StackPanel x:Name="AddContentAmbianceStackPanel">
-                                <Grid Height="100">
+                                <Grid Height="75">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="3*"></ColumnDefinition>
                                         <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                                        
                                     </Grid.ColumnDefinitions>
-
-                                    <!--left column-->
-                                    <Grid Grid.Column="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="8*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                            <RowDefinition Height="3*"></RowDefinition>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <ComboBox Grid.Column="1" Grid.Row="1" x:Name="AddContentAmbianceOptions"></ComboBox>
-
-                                    </Grid>
-
-                                    <!--Middle column-->
-                                    <Grid Grid.Column="1">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition></RowDefinition>
-                                            <RowDefinition></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Volume:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-
-                                        <Slider Grid.Column="1" Grid.Row="0" x:Name="AddContentAmbianceVolumeSlider" Value="50" Maximum="100"></Slider>
-
-                                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Frequency:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-
-                                        <Slider Grid.Column="1" Grid.Row="1" x:Name="AddContentAmbianceFrequencySlider" Value="50" Maximum="100"></Slider>
-
-                                    </Grid>
-
-                                    <!--right column-->
-                                    <Grid Grid.Column="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <Button Grid.Column="1" Grid.Row="1" x:Name="ContentAddAmbianceClearButton" Click="AddContentAmbianceClearClick"></Button>
-                                    </Grid>
-                                </Grid>
-
-                                <!-- fix this later lmao vvvv -->
-                                <Grid Height="100">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-
-                                    <!--left column-->
-                                    <Grid Grid.Column="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="8*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                            <RowDefinition Height="3*"></RowDefinition>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <ComboBox Grid.Column="1" Grid.Row="1" x:Name="AddContentAmbianceOptions1"></ComboBox>
-
-                                    </Grid>
-
-                                    <!--Middle column-->
-                                    <Grid Grid.Column="1">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition></RowDefinition>
-                                            <RowDefinition></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Volume:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-
-                                        <Slider Grid.Column="1" Grid.Row="0" x:Name="AddContentAmbianceVolumeSlider1" Value="50"></Slider>
-
-                                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Frequency:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-
-                                        <Slider Grid.Column="1" Grid.Row="1" x:Name="AddContentAmbianceFrequencySlider1" Value="50"></Slider>
-
-                                    </Grid>
-
-                                    <!--right column-->
-                                    <Grid Grid.Column="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <Button Grid.Column="1" Grid.Row="1" x:Name="ContentAddAmbianceClearButton1" Click="AddContentAmbianceClearClick"></Button>
-                                    </Grid>
-
-                                </Grid>
-
-                                <!-- fix this later lmao vvvv -->
-                                <Grid Height="100">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-
-                                    <!--left column-->
-                                    <Grid Grid.Column="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="8*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                            <RowDefinition Height="3*"></RowDefinition>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <ComboBox Grid.Column="1" Grid.Row="1" x:Name="AddContentAmbianceOptions2"></ComboBox>
-
-                                    </Grid>
-
-                                    <!--Middle column-->
-                                    <Grid Grid.Column="1">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition></RowDefinition>
-                                            <RowDefinition></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Volume:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-
-                                        <Slider Grid.Column="1" Grid.Row="0" x:Name="AddContentAmbianceVolumeSlider2" Value="50"></Slider>
-
-                                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Frequency:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-
-                                        <Slider Grid.Column="1" Grid.Row="1" x:Name="AddContentAmbianceFrequencySlider2" Value="50"></Slider>
-
-                                    </Grid>
-
-                                    <!--right column-->
-                                    <Grid Grid.Column="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <Button Grid.Column="1" Grid.Row="1" x:Name="ContentAddAmbianceClearButton2" Click="AddContentAmbianceClearClick"></Button>
-                                    </Grid>
-
-                                </Grid>
-
-                                <!-- fix this later lmao vvvv -->
-                                <Grid Height="100">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-
-                                    <!--left column-->
-                                    <Grid Grid.Column="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="8*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                            <RowDefinition Height="3*"></RowDefinition>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <ComboBox Grid.Column="1" Grid.Row="1" x:Name="AddContentAmbianceOptions3"></ComboBox>
-
-                                    </Grid>
-
-                                    <!--Middle column-->
-                                    <Grid Grid.Column="1">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition></RowDefinition>
-                                            <RowDefinition></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Volume:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-
-                                        <Slider Grid.Column="1" Grid.Row="0" x:Name="AddContentAmbianceVolumeSlider3" Value="50"></Slider>
-
-                                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Frequency:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-
-                                        <Slider Grid.Column="1" Grid.Row="1" x:Name="AddContentAmbianceFrequencySlider3" Value="50"></Slider>
-
-                                    </Grid>
-
-                                    <!--right column-->
-                                    <Grid Grid.Column="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <Button Grid.Column="1" Grid.Row="1" x:Name="ContentAddAmbianceClearButton3" Click="AddContentAmbianceClearClick"></Button>
-                                    </Grid>
-
-                                </Grid>
-
-                                <!-- fix this later lmao vvvv -->
-                                <Grid Height="100">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-
-                                    <!--left column-->
-                                    <Grid Grid.Column="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="8*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                            <RowDefinition Height="3*"></RowDefinition>
-                                            <RowDefinition Height="2*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <ComboBox Grid.Column="1" Grid.Row="1" x:Name="AddContentAmbianceOptions4"></ComboBox>
-
-                                    </Grid>
-
-                                    <!--Middle column-->
-                                    <Grid Grid.Column="1">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition></RowDefinition>
-                                            <RowDefinition></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="3*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Volume:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-
-                                        <Slider Grid.Column="1" Grid.Row="0" x:Name="AddContentAmbianceVolumeSlider4" Value="50"></Slider>
-
-                                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Frequency:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
-
-                                        <Slider Grid.Column="1" Grid.Row="1" x:Name="AddContentAmbianceFrequencySlider4" Value="50"></Slider>
-
-                                    </Grid>
-
-                                    <!--right column-->
-                                    <Grid Grid.Column="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                            <RowDefinition Height="*"></RowDefinition>
-                                        </Grid.RowDefinitions>
-
-                                        <Button Grid.Column="1" Grid.Row="1" x:Name="ContentAddAmbianceClearButton4" Click="AddContentAmbianceClearClick"></Button>
-                                    </Grid>
-
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                        <RowDefinition Height="8*"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    
+                                    
+
+                                    <Button Grid.Column="1" Grid.Row="1" Content="+" Click="AddContentAmbianceAddElementClick" x:Name="AddContentAmbianceAddElementButton"></Button>
                                 </Grid>
 
                             </StackPanel>
@@ -899,13 +584,36 @@
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="2*"></RowDefinition>
                             <RowDefinition Height="2*"></RowDefinition>
-                            <RowDefinition Height="3*"></RowDefinition>
+                            <RowDefinition Height="15*"></RowDefinition>
                         </Grid.RowDefinitions>
 
-                        <TextBox Grid.Column="1" Grid.Row="1" x:Name="addContentAmbianceName"></TextBox>
+                        <Grid Grid.Column="1" Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
 
-                        <Button Grid.Column="1" Grid.Row="3" x:Name="addContentAmbianceConfirm" Click="AddContentAmbianceConfirmClick" Content="Confirm"></Button>
-                        
+                            <Button Grid.Column="2" x:Name="addContentAmbianceConfirm" Click="AddContentAmbianceConfirmClick" Content="Confirm"></Button>
+
+                            <Button Grid.Column="0" x:Name="addContentAmbianceSample" Click="AddContentAmbianceTestClick" Content="Test"></Button>
+
+                        </Grid>
+
+                        <Grid Grid.Column="1" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="8*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="1" Text="Name:" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+
+                            <TextBox Grid.Column="3" x:Name="addContentAmbianceName"></TextBox>
+
+
+                        </Grid>
                     </Grid>
                     
                 </Grid>
@@ -1209,7 +917,7 @@
             </Grid>
 
             
-            <Grid Grid.Row="1" x:Name="removeContentSubGrid" IsEnabled="False" Visibility="Visible" Background="PaleVioletRed">
+            <Grid Grid.Row="1" x:Name="removeContentSubGrid" IsEnabled="False" Visibility="Hidden" Background="PaleVioletRed">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="3*"></ColumnDefinition>
