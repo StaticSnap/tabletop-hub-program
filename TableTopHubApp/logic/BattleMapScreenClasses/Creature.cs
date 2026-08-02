@@ -20,6 +20,7 @@
         public string Name
         {
             get =>this.name;
+            set => this.name = value;
         }
 
         public string Stats

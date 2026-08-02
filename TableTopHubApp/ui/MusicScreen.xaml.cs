@@ -1698,6 +1698,11 @@ namespace TableTopHubApp
             AudioPlayer.ChangeSoundEffectVolume((int)this.soundVolume.Value);
         }
 
+        private void CurrentNameChanged(object sender, RoutedEventArgs e)
+        {
+            App.BattleTab.UpdateName(this.statsGridCreatureName.Text);
+        }
+
         private void CurrentHealthChanged(object sender, RoutedEventArgs e)
         {
             App.BattleTab.UpdateHealth(this.statsGridCreatureCurrentHealth.Text);
@@ -1711,7 +1716,10 @@ namespace TableTopHubApp
                 {
                     CreatureIcon icon = (CreatureIcon)selected;
                     string[] stats = icon.GetStats();
+                    this.statsGridCreatureName.TextChanged -= this.CurrentNameChanged;
                     this.statsGridCreatureName.Text = stats[0];
+                    this.statsGridCreatureName.TextChanged += this.CurrentNameChanged;
+
                     this.statsGridCreatureStats.Text = stats[1];
                     this.statsGridCreatureAbilities.Text = stats[2];
                     this.statsGridCreatureMaxHealth.Text = stats[3];
@@ -1722,7 +1730,10 @@ namespace TableTopHubApp
                 }
                 else
                 {
+                    this.statsGridCreatureName.TextChanged -= this.CurrentNameChanged;
                     this.statsGridCreatureName.Text = string.Empty;
+                    this.statsGridCreatureName.TextChanged += this.CurrentNameChanged;
+
                     this.statsGridCreatureStats.Text = string.Empty;
                     this.statsGridCreatureAbilities.Text = string.Empty;
                     this.statsGridCreatureMaxHealth.Text = string.Empty;

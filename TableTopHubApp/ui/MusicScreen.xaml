@@ -288,7 +288,7 @@
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="1" x:Name="addContentGrid" IsEnabled="True" Visibility="Visible">
+        <Grid Grid.Row="1" x:Name="addContentGrid" IsEnabled="False" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="5*"></RowDefinition>
@@ -984,7 +984,7 @@
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="1" x:Name="statsGrid" IsEnabled="False" Visibility="Hidden">
+        <Grid Grid.Row="1" x:Name="statsGrid" IsEnabled="False" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="8*"></RowDefinition>
@@ -1010,7 +1010,7 @@
 
 
                 <TextBlock Grid.Row="1" Grid.Column="0"  Name="statsGridCreatureStats" Background="Beige" TextWrapping="Wrap" FontSize="40"></TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="0" Name="statsGridCreatureName" Background="Beige" Margin="10" TextAlignment="Center" FontSize="40"></TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="0" Name="statsGridCreatureName" TextChanged="CurrentNameChanged" Background="Beige" Margin="10" TextAlignment="Center" FontSize="40"></TextBox>
                 <TextBlock Grid.Row="1" Grid.Column="1" Name="statsGridCreatureAbilities" Background="Beige" Margin="10" TextWrapping="Wrap" FontSize="40"></TextBlock>
 
                 <Grid Grid.Row="0" Grid.Column="1">
