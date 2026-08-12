@@ -63,33 +63,6 @@ namespace TableTopHubApp
             this.mapOptions.SelectedValuePath = "Id";
             this.mapOptions.SelectedIndex = 0;
 
-            /*
-            this.AddContentAmbianceOptions.ItemsSource = AudioManager.GetSoundEffects();
-            this.AddContentAmbianceOptions.DisplayMemberPath = "Name";
-            this.AddContentAmbianceOptions.SelectedValuePath = "Id";
-            this.AddContentAmbianceOptions.SelectedIndex = 0;
-
-            this.AddContentAmbianceOptions1.ItemsSource = AudioManager.GetSoundEffects();
-            this.AddContentAmbianceOptions1.DisplayMemberPath = "Name";
-            this.AddContentAmbianceOptions1.SelectedValuePath = "Id";
-            this.AddContentAmbianceOptions1.SelectedIndex = 0;
-
-            this.AddContentAmbianceOptions2.ItemsSource = AudioManager.GetSoundEffects();
-            this.AddContentAmbianceOptions2.DisplayMemberPath = "Name";
-            this.AddContentAmbianceOptions2.SelectedValuePath = "Id";
-            this.AddContentAmbianceOptions2.SelectedIndex = 0;
-
-            this.AddContentAmbianceOptions3.ItemsSource = AudioManager.GetSoundEffects();
-            this.AddContentAmbianceOptions3.DisplayMemberPath = "Name";
-            this.AddContentAmbianceOptions3.SelectedValuePath = "Id";
-            this.AddContentAmbianceOptions3.SelectedIndex = 0;
-
-            this.AddContentAmbianceOptions4.ItemsSource = AudioManager.GetSoundEffects();
-            this.AddContentAmbianceOptions4.DisplayMemberPath = "Name";
-            this.AddContentAmbianceOptions4.SelectedValuePath = "Id";
-            this.AddContentAmbianceOptions4.SelectedIndex = 0;
-            */
-
             this.editContentSelectionDropdown.DisplayMemberPath = "Name";
             this.editContentSelectionDropdown.SelectedValuePath = "Id";
             this.editContentSelectionDropdown.SelectedIndex = 0;
@@ -999,7 +972,20 @@ namespace TableTopHubApp
             {
                 return;
             }
-            
+
+
+
+            //FileManager.AddData("amb",);
+
+            /*FileManager.CopyFile("map");
+            FileManager.AddData("map", data);
+            this.ContentClearAll();
+            this.addContentMapConfirmFeedback.Text = "Successfully added!";
+            MapManager.InitMaps();
+            this.mapOptions.ItemsSource = MapManager.GetMaps();
+            this.mapOptions.DisplayMemberPath = "Name";
+            this.mapOptions.SelectedValuePath = "Id";
+            this.mapOptions.SelectedIndex = 0;*/
             //TODO
         }
 
@@ -1677,7 +1663,7 @@ namespace TableTopHubApp
         }
 
         /// <summary>
-        /// Event raised when the window is closed. makes sure to end playback of music. in the future close the other windows when this happens.
+        /// Event raised when the window is closed. makes sure to end playback of music.
         /// </summary>
         private void MusicScreenClosing(object sender, CancelEventArgs e)
         {

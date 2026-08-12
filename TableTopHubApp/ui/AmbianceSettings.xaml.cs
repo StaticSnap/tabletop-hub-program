@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-namespace TableTopHubApp.ui
+﻿namespace TableTopHubApp.ui
 {
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media;
+
     public struct AmbianceData
     {
         public string Id;
@@ -29,15 +17,16 @@ namespace TableTopHubApp.ui
     }
 
     /// <summary>
-    /// Interaction logic for AmbianceSettings.xaml
+    /// Interaction logic for AmbianceSettings.xaml.
     /// </summary>
     public partial class AmbianceSettings : UserControl
     {
         public AmbianceSettings()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
-            List<ManifestEntry> allSfx = AudioManager.GetTracks();
+            List<ManifestEntry> allSfx = new List<ManifestEntry>();
+            allSfx.AddRange(AudioManager.GetTracks());
             allSfx.AddRange(AudioManager.GetSoundEffects());
             
             this.audioOptions.ItemsSource = allSfx;

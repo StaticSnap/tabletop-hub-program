@@ -984,7 +984,7 @@
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="1" x:Name="statsGrid" IsEnabled="False" Visibility="Visible">
+        <Grid Grid.Row="1" x:Name="statsGrid" IsEnabled="False" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="8*"></RowDefinition>
