@@ -8,6 +8,7 @@ namespace TableTopHubApp
     using System.IO;
     using System.IO.Compression;
     using System.Text.Json;
+    using TableTopHubApp.ui;
 
     internal static class StorageManager
     {
@@ -30,6 +31,10 @@ namespace TableTopHubApp
         private static string dataIconDir = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\Icon");
         private static string manifestIconPath = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\IconManifest.json");
         private static List<ManifestEntry> manifestIcon = new();
+
+        private static string dataAmbianceDir = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\Ambiance");
+        private static string manifestAmbiancePath = Path.Combine(Directory.GetCurrentDirectory(), "resources\\data\\AmbianceManifest.json");
+        private static List<ManifestEntry> manifestAmbiance = new();
 
         public static void Init()
         {
@@ -56,6 +61,11 @@ namespace TableTopHubApp
             if (!Path.Exists(dataIconDir))
             {
                 Directory.CreateDirectory(dataIconDir);
+            }
+
+            if (!Path.Exists(dataAmbianceDir))
+            {
+                Directory.CreateDirectory(dataAmbianceDir);
             }
 
             LoadManifests();
@@ -92,6 +102,12 @@ namespace TableTopHubApp
                 string json = File.ReadAllText(manifestIconPath);
                 manifestIcon = JsonSerializer.Deserialize<List<ManifestEntry>>(json) ?? new();
             }
+
+            if (File.Exists(manifestAmbiancePath))
+            {
+                string json = File.ReadAllText(manifestAmbiancePath);
+                manifestAmbiance = JsonSerializer.Deserialize<List<ManifestEntry>>(json) ?? new();
+            }
         }
 
         private static void SaveSoundManifest()
@@ -122,6 +138,12 @@ namespace TableTopHubApp
         {
             string json = JsonSerializer.Serialize(manifestIcon, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(manifestIconPath, json);
+        }
+
+        private static void SaveAmbianceManifest()
+        {
+            string json = JsonSerializer.Serialize(manifestAmbiance, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(manifestAmbiancePath, json);
         }
 
         public static void SaveObject(SoundEffect obj)
@@ -192,6 +214,20 @@ namespace TableTopHubApp
             manifestIcon.RemoveAll(e => e.Id == obj.Id);
             manifestIcon.Add(new ManifestEntry { Id = obj.Id, Name = obj.Name, FileName = fileName });
             SaveIconManifest();
+        }
+
+        public static void SaveObject(AmbientEffect obj)
+        {
+            string fileName = $"{obj.Id}.gz";
+            string filePath = Path.Combine(dataAmbianceDir, fileName);
+
+            using FileStream fs = new(filePath , FileMode.Create);
+            using GZipStream gzip = new(fs, CompressionLevel.Optimal);
+            JsonSerializer.Serialize(gzip, obj);
+
+            manifestAmbiance.RemoveAll(e => e.Id == obj.Id);
+            manifestAmbiance.Add(new ManifestEntry { Id = obj.Id, Name = obj.Name, FileName = fileName });
+            SaveAmbianceManifest();
         }
 
         public static SoundEffect? LoadSoundObject(string id)
@@ -289,6 +325,26 @@ namespace TableTopHubApp
             return JsonSerializer.Deserialize<Icon>(gzip);
         }
 
+        public static AmbientEffect? LoadAmbianceObject(string id)
+        {
+            ManifestEntry? entry = manifestAmbiance.Find(e => e.Id == id);
+            if (entry == null)
+            {
+                return null;
+            }
+
+            string filePath = Path.Combine(dataAmbianceDir, entry.FileName);
+            if (!File.Exists(filePath))
+            {
+                return null;
+            }
+
+            using FileStream fs = new(filePath, FileMode.Open);
+            using GZipStream gzip = new(fs, CompressionMode.Decompress);
+            return JsonSerializer.Deserialize<AmbientEffect>(gzip);
+
+        }
+
         public static bool DeleteObject(string id)
         {
             ManifestEntry? entry = manifestSound.Find(e => e.Id == id);
@@ -361,6 +417,20 @@ namespace TableTopHubApp
                 return true;
             }
 
+            entry = manifestAmbiance.Find(e => e.Id == id);
+            if (entry != null)
+            {
+                string filepath = Path.Combine(dataAmbianceDir, entry.FileName);
+                if (File.Exists(filepath))
+                {
+                    File.Delete(filepath);
+                }
+
+                manifestAmbiance.RemoveAll(e => e.Id == id);
+                SaveAmbianceManifest();
+                return true;
+            }
+
             return false;
         }
 
@@ -387,6 +457,11 @@ namespace TableTopHubApp
         public static List<ManifestEntry> GetAllIconEntries()
         {
             return new List<ManifestEntry>(manifestIcon);
+        }
+
+        public static List<ManifestEntry> GetAllAmbianceEntries()
+        {
+            return new List<ManifestEntry>(manifestAmbiance);
         }
     }
 }

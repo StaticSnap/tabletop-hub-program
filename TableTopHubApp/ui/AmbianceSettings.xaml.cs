@@ -7,10 +7,8 @@
     public struct AmbianceData
     {
         public string Id;
-
         public bool Looping;
         public bool Fluctuating;
-
         public double Volume;
         public double Frequency;
         public double Variance;

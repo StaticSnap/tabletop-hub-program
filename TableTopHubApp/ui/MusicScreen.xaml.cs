@@ -269,6 +269,9 @@ namespace TableTopHubApp
             this.AddContentMapHeightBox.Text = string.Empty;
             this.addContentMapConfirmFeedback.Text = string.Empty;
 
+            this.addContentAmbianceName.Text = string.Empty;
+            this.AddContentAmbianceStackPanel.Children.RemoveRange(0, this.AddContentAmbianceStackPanel.Children.Count - 1);
+
             // edit section
             if(this.editContentMusicIntroOpenFileFeedback == null)
             {
@@ -973,9 +976,18 @@ namespace TableTopHubApp
                 return;
             }
 
+            List<AmbianceData> ambDat = new List<AmbianceData>();
+            for(int i = 0; i < this.AddContentAmbianceStackPanel.Children.Count; i++)
+            {
+                if(this.AddContentAmbianceStackPanel.Children[i].GetType() == typeof(AmbianceSettings))
+                {
+                    AmbianceSettings cur = (AmbianceSettings)this.AddContentAmbianceStackPanel.Children[i];
+                    ambDat.Add(cur.ReadData());
+                }
+            }
 
-
-            //FileManager.AddData("amb",);
+            FileManager.AddAmbDat(this.addContentAmbianceName.Text, ambDat);
+            this.ContentClearAll();
 
             /*FileManager.CopyFile("map");
             FileManager.AddData("map", data);

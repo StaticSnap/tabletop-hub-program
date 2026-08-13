@@ -11,6 +11,7 @@ namespace TableTopHubApp
     using System.Text;
     using System.Threading.Tasks;
     using Microsoft.Win32;
+    using TableTopHubApp.ui;
 
     /// <summary>
     /// File Manager class handles all of the IO associated with writing xaml data for resources and copying them to resources folder upon selection.
@@ -342,6 +343,38 @@ namespace TableTopHubApp
             {
                 throw new Exception("unimplemented type");
             }
+        }
+
+        /// <summary>
+        /// Seperate function to handle cases for adding ambiance data.
+        /// This function exists because formatting all of the data into a string list was too finicky.
+        /// </summary>
+        /// <param name="name">The name of the new ambiance.</param>
+        /// <param name="data">All of the sound data associated.</param>
+        /// <param name="id">The id of the ambiance in case you're updating instead of adding.</param>
+        public static void AddAmbDat(string name, List<AmbianceData> data, string id = "NULL")
+        {
+            AmbientEffect newAmb = new AmbientEffect();
+            newAmb.Name = name;
+
+            if (id != "NULL")
+            {
+                newAmb.Id = id;
+            }
+
+            for (int i = 0; i < data.Count; i++)
+            {
+                SoundInfo newSnd = new SoundInfo();
+                newSnd.Id = data[i].Id;
+                newSnd.Frequency = data[i].Frequency;
+                newSnd.Variance = data[i].Variance;
+                newSnd.Looping = data[i].Looping;
+                newSnd.Fluctuating = data[i].Fluctuating;
+                newSnd.Volume = data[i].Volume;
+                newAmb.Sounds.Add(newSnd);
+            }
+
+            StorageManager.SaveObject(newAmb);
         }
     }
 }
