@@ -79,9 +79,24 @@ namespace TableTopHubApp
                 int val = 0;
 
                 // Only change health if both the selected element is a creature icon and if the string input can be parsed.
-                if (this.selectedElement.GetType() == typeof(CreatureIcon) && int.TryParse(healthVal, out val))
+                if (this.selectedElement != null && this.selectedElement.GetType() == typeof(CreatureIcon) && int.TryParse(healthVal, out val))
                 {
                     ((CreatureIcon)this.selectedElement).UpdateHealth(val);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Takes in a string form the UI and attempts to change the internal name of the creature based off that string.
+        /// </summary>
+        /// <param name="nameVal">The string to use as a new name.</param>
+        public void UpdateName(string nameVal)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                if (this.selectedElement != null && this.selectedElement.GetType() == typeof(CreatureIcon))
+                {
+                    ((CreatureIcon)this.selectedElement).UpdateName(nameVal);
                 }
             });
         }

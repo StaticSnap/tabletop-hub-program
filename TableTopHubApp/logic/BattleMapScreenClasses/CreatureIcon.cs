@@ -141,6 +141,15 @@ namespace TableTopHubApp
         }
 
         /// <summary>
+        /// Changes the stored name of the creature (does not change permanantly).
+        /// </summary>
+        /// <param name="name">the new name for the icon.</param>
+        public void UpdateName(string name)
+        {
+            this.stats.Name = name;
+        }
+
+        /// <summary>
         ///  Ovverided method to draw the shape being displayed.
         /// </summary>
         /// <param name="drawingContext">The canvas on which to draw.</param>

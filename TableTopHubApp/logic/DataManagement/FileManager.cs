@@ -11,6 +11,7 @@ namespace TableTopHubApp
     using System.Text;
     using System.Threading.Tasks;
     using Microsoft.Win32;
+    using TableTopHubApp.ui;
 
     /// <summary>
     /// File Manager class handles all of the IO associated with writing xaml data for resources and copying them to resources folder upon selection.
@@ -26,6 +27,7 @@ namespace TableTopHubApp
         public static string CurrentFilePath
         {
             get { return currentFilePath; }
+            set { currentFilePath = value; }
         }
 
         /// <summary>
@@ -34,6 +36,7 @@ namespace TableTopHubApp
         public static string CurrentIntroPath
         {
             get { return currentIntroPath; }
+            set { currentFilePath = value; }
         }
 
         /// <summary>
@@ -185,7 +188,7 @@ namespace TableTopHubApp
         /// Copies the file from it's origional location to the resources folder for later use.
         /// </summary>
         /// <param name="type">the type of resource determines where it will be placed.</param>
-        /// <returns>true if file was copied and fals eif file already exists.</returns>
+        /// <returns>true if file was copied and false if file already exists.</returns>
         public static bool CopyFile(string type)
         {
             string finalLocation = string.Empty;
@@ -264,18 +267,29 @@ namespace TableTopHubApp
         /// </summary>
         /// <param name="type">type of resource.</param>
         /// <param name="data">data associated with that resource.</param>
+        /// <param name="id">id of the object in the case that you are updating an existing entry.</param>
         /// <exception cref="Exception">passed type which doesn't exists.</exception>
-        public static void AddData(string type, string[] data)
+        public static void AddData(string type, string[] data, string id = "NULL")
         {
             if (type == "music")
             {
                 Track newTrack = new Track { Name = data[0], LoopPath = data[1], IntroPath = data[2] };
+                if(id != "NULL")
+                {
+                    newTrack.Id = id;
+                }
+
                 StorageManager.SaveObject(newTrack);
                 return;
             }
             else if (type == "sound")
             {
                 SoundEffect newSound = new SoundEffect { Name = data[0], FilePath = data[1] };
+                if (id != "NULL")
+                {
+                    newSound.Id = id;
+                }
+
                 StorageManager.SaveObject(newSound);
                 return;
             }
@@ -290,21 +304,34 @@ namespace TableTopHubApp
                 int.TryParse(data[7], out health);
 
                 Icon newIcon = new Icon { Name = data[0], FilePath = data[1], Type = data[2], Width = width, Height = height, Stats = data[5], Attacks = data[6], MaxHealth = health };
+                if (id != "NULL")
+                {
+                    newIcon.Id = id;
+                }
+
                 StorageManager.SaveObject(newIcon);
                 return;
             }
             else if (type == "overlay")
             {
                 Overlay newOverlay = new Overlay { Name = data[0], FilePath = data[1], Type = data[2], Looping = data[3], ChromaVal = data[4] };
+                if (id != "NULL")
+                {
+                    newOverlay.Id = id;
+                }
+
                 StorageManager.SaveObject(newOverlay);
                 return;
             }
             else if (type == "map")
             {
-
                 Map newMap = new Map { Name = data[0], FilePath = data[1], Width = data[2], Height = data[3] };
+                if (id != "NULL")
+                {
+                    newMap.Id = id;
+                }
 
-                if(Path.GetExtension(newMap.FilePath) == ".gif")
+                if (Path.GetExtension(newMap.FilePath) == ".gif")
                 {
                     newMap.Type = "ANIMATED";
                 }
@@ -316,6 +343,28 @@ namespace TableTopHubApp
             {
                 throw new Exception("unimplemented type");
             }
+        }
+
+        /// <summary>
+        /// Seperate function to handle cases for adding ambiance data.
+        /// This function exists because formatting all of the data into a string list was too finicky.
+        /// </summary>
+        /// <param name="name">The name of the new ambiance.</param>
+        /// <param name="data">All of the sound data associated.</param>
+        /// <param name="id">The id of the ambiance in case you're updating instead of adding.</param>
+        public static void AddAmbDat(string name, List<SoundInfo> data, string id = "NULL")
+        {
+            AmbientEffect newAmb = new AmbientEffect();
+            newAmb.Name = name;
+
+            if (id != "NULL")
+            {
+                newAmb.Id = id;
+            }
+
+            newAmb.Sounds = data;
+
+            StorageManager.SaveObject(newAmb);
         }
     }
 }

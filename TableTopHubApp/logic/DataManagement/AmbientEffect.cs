@@ -6,6 +6,6 @@
 
         public string Name { get; set; }
 
-        public List<SoundInfo> Sounds { get; set; }
+        public List<SoundInfo> Sounds { get; set; } = new List<SoundInfo>();
     }
 }
