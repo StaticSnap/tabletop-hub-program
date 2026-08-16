@@ -7,6 +7,7 @@ namespace TableTopHubApp
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using TableTopHubApp.ui;
 
     /// <summary>
     /// Manager for audio handles data reading and file opening.
@@ -15,6 +16,7 @@ namespace TableTopHubApp
     {
         private static List<ManifestEntry> manifestTracks = StorageManager.GetAllTrackEntries();
         private static List<ManifestEntry> manifestSounds = StorageManager.GetAllSoundEntries();
+        private static List<ManifestEntry> manifestAmbiance = StorageManager.GetAllAmbianceEntries();
 
         /// <summary>
         /// Opens the data files and fills the dictionaries with data pertaining to the tracks and sounds.
@@ -23,6 +25,7 @@ namespace TableTopHubApp
         {
             manifestTracks = StorageManager.GetAllTrackEntries();
             manifestSounds = StorageManager.GetAllSoundEntries();
+            manifestAmbiance = StorageManager.GetAllAmbianceEntries();
         }
 
         /// <summary>
@@ -41,6 +44,15 @@ namespace TableTopHubApp
         public static List<ManifestEntry> GetSoundEffects()
         {
             return manifestSounds;
+        }
+
+        /// <summary>
+        /// Gets the dictionary of ambiance containing all data on an ambiance object.
+        /// </summary>
+        /// <returns>Dictionary of ambiance titles to data.</returns>
+        public static List<ManifestEntry> GetAmbiance()
+        {
+            return manifestAmbiance;
         }
 
         /// <summary>
@@ -83,7 +95,7 @@ namespace TableTopHubApp
 
         public static string GetSoundTitle(string soundId)
         {
-            SoundEffect soundData = StorageManager.LoadSoundObject(soundId);
+            SoundEffect? soundData = StorageManager.LoadSoundObject(soundId);
 
             if (soundData == null)
             {
@@ -92,6 +104,26 @@ namespace TableTopHubApp
             else
             {
                 return soundData.Name;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the loaded ambienteffect object from the id associated with it.
+        /// </summary>
+        /// <param name="ambID">ID for the ambient effect you're looking for.</param>
+        /// <returns>a complete AmbientEffect record.</returns>
+        /// <exception cref="Exception">If the ID isn't associated with any ambiance then throw.</exception>
+        public static AmbientEffect GetAmbientEffect(string ambID)
+        {
+            AmbientEffect? ambData = StorageManager.LoadAmbianceObject(ambID);
+
+            if (ambData == null)
+            {
+                throw new Exception("Ambiance not found");
+            }
+            else
+            {
+                return ambData;
             }
         }
 

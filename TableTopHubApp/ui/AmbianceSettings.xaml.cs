@@ -4,16 +4,6 @@
     using System.Windows.Controls;
     using System.Windows.Media;
 
-    public struct AmbianceData
-    {
-        public string Id;
-        public bool Looping;
-        public bool Fluctuating;
-        public double Volume;
-        public double Frequency;
-        public double Variance;
-    }
-
     /// <summary>
     /// Interaction logic for AmbianceSettings.xaml.
     /// </summary>
@@ -33,9 +23,9 @@
             this.audioOptions.SelectedValue = 0;
         }
 
-        public AmbianceData ReadData()
+        public SoundInfo ReadData()
         {
-            AmbianceData data = new AmbianceData();
+            SoundInfo data = new SoundInfo();
 
             data.Looping = (bool)this.loopingCheck.IsChecked;
             data.Fluctuating = (bool)this.pitchCheck.IsChecked;
@@ -54,6 +44,30 @@
             var parent = VisualTreeHelper.GetParent(this) as StackPanel;
 
             parent?.Children.Remove(this);
+        }
+
+        private void LoopingClick(object sender, RoutedEventArgs e)
+        {
+            if((bool)this.loopingCheck.IsChecked)
+            {
+                this.frequencySlider.IsEnabled = false;
+            }
+            else
+            {
+                this.frequencySlider.IsEnabled = true;
+            }
+        }
+
+        private void PitchClick(object sender, RoutedEventArgs e)
+        {
+            if((bool)this.pitchCheck.IsChecked)
+            {
+                this.variationSlider.IsEnabled = true;
+            }
+            else
+            {
+                this.variationSlider.IsEnabled = false;
+            }
         }
     }
 }

@@ -32,9 +32,12 @@ namespace TableTopHubApp
         {
             // default volume.
             music.Volume = musicVolume;
+            soundEffect.Volume = soundeffectVolume;
 
             // set up cancellation token.
             cancelTok = new CancellationTokenSource();
+
+            cancelTokAmb = new CancellationTokenSource();
         }
 
         /// <summary>
@@ -58,12 +61,31 @@ namespace TableTopHubApp
         }
 
         /// <summary>
+        /// Sets the volume of the ambiance.
+        /// Does not change the volume of the sound since ambianc euses many sounds instead of 1 like the others do.
+        /// </summary>
+        /// <param name="volume">range 0-100 volume input.</param>
+        public static void ChangeAmbianceVolume(int volume)
+        {
+            ambianceVolume = volume;
+        }
+
+        /// <summary>
         /// Event to end play on a track early.
         /// </summary>
         public static void StopTrack()
         {
             cancelTok?.Cancel();
             cancelTok = new CancellationTokenSource();
+        }
+
+        /// <summary>
+        /// Event to end play on ambiance.
+        /// </summary>
+        public static void StopAmbiance()
+        {
+            cancelTokAmb?.Cancel();
+            cancelTokAmb = new CancellationTokenSource();
         }
 
         /// <summary>
@@ -104,10 +126,21 @@ namespace TableTopHubApp
         }
 
         /// <summary>
-        /// 
+        /// Starts running seperate threads to play sounds simultaniously.
+        /// This one uses an ID to start.
+        /// </summary>
+        /// <param name="title">The ID of the ambiance.</param>
+        public static void PrepAmbianceWorkers(string title)
+        {
+            AmbientEffect effect = AudioManager.GetAmbientEffect(title);
+            PrepAmbianceWorkers(effect.Sounds);
+        }
+
+        /// <summary>
+        /// Starts running seperate threads to play sounds simultaniously.
         /// </summary>
         /// <param name="data">The list of Ambiance data.</param>
-        public static void PrepAmbianceWorkers(List<AmbianceData> data)
+        public static void PrepAmbianceWorkers(List<SoundInfo> data)
         {
             cancelTokAmb?.Cancel();
 
@@ -120,7 +153,7 @@ namespace TableTopHubApp
             }
         }
 
-        private static void PlayAmbiance(AmbianceData data, CancellationToken tok)
+        private static void PlayAmbiance(SoundInfo data, CancellationToken tok)
         {
             string? audioPath = null;
             if (AudioManager.GetTrackPath(data.Id) != null)
@@ -160,13 +193,26 @@ namespace TableTopHubApp
                     if (data.Fluctuating)
                     {
                         sound.Pitch = 1f + (float)((Random.Shared.NextDouble() - 0.5) * data.Variance/100);
-                        sound.Volume = ((ambianceVolume / 100) * ((float)data.Volume / 100) * 100) + ((float)((Random.Shared.NextDouble() - 0.5) * data.Variance / 100) * 100);
+                        if(ambianceVolume > 0)
+                        {
+                            sound.Volume = ((ambianceVolume / 100) * ((float)data.Volume / 100) * 100) + ((float)((Random.Shared.NextDouble() - 0.5) * data.Variance / 200) * 100);
+                        }
+                        else
+                        {
+                            sound.Volume = 0;
+                        }
                     }
 
                     float baseDelay = (float)(-(1000 / (data.Frequency - 103)) - 9);
                     Debug.WriteLine(Task.CurrentId.ToString() + ": Waiting:" + baseDelay);
-                    Task.Delay((int)(1000 * baseDelay * (Random.Shared.NextDouble() + 0.5))).Wait();
                     sound.Play();
+                    Task.Delay((int)(1000 * baseDelay * (Random.Shared.NextDouble() + 0.5))).Wait();
+                }
+
+                Task.Delay(500).Wait();
+                if (!data.Fluctuating)
+                {
+                    sound.Volume = (ambianceVolume / 100) * ((float)data.Volume / 100) * 100;
                 }
             }
 

@@ -48,6 +48,11 @@ namespace TableTopHubApp
             this.soundOptions.SelectedValuePath = "Id";
             this.soundOptions.SelectedIndex = 0;
 
+            this.AmbianceOptions.ItemsSource = AudioManager.GetAmbiance();
+            this.AmbianceOptions.DisplayMemberPath = "Name";
+            this.AmbianceOptions.SelectedValuePath = "Id";
+            this.AmbianceOptions.SelectedIndex = 0;
+
             this.overlayOptions.ItemsSource = OverlayManager.GetOverlays();
             this.overlayOptions.DisplayMemberPath = "Name";
             this.overlayOptions.SelectedValuePath = "Id";
@@ -959,7 +964,9 @@ namespace TableTopHubApp
 
         private void AddContentAmbianceTestClick(object sender, RoutedEventArgs e)
         {
-            List<AmbianceData> data = new List<AmbianceData>();
+            AudioPlayer.StopAmbiance();
+
+            List<SoundInfo> data = new List<SoundInfo>();
             for(int i = 0; i < this.AddContentAmbianceStackPanel.Children.Count - 1; i++)
             {
                 data.Add(((AmbianceSettings)this.AddContentAmbianceStackPanel.Children[i]).ReadData());
@@ -976,7 +983,7 @@ namespace TableTopHubApp
                 return;
             }
 
-            List<AmbianceData> ambDat = new List<AmbianceData>();
+            List<SoundInfo> ambDat = new List<SoundInfo>();
             for(int i = 0; i < this.AddContentAmbianceStackPanel.Children.Count; i++)
             {
                 if(this.AddContentAmbianceStackPanel.Children[i].GetType() == typeof(AmbianceSettings))
@@ -989,16 +996,11 @@ namespace TableTopHubApp
             FileManager.AddAmbDat(this.addContentAmbianceName.Text, ambDat);
             this.ContentClearAll();
 
-            /*FileManager.CopyFile("map");
-            FileManager.AddData("map", data);
-            this.ContentClearAll();
-            this.addContentMapConfirmFeedback.Text = "Successfully added!";
-            MapManager.InitMaps();
-            this.mapOptions.ItemsSource = MapManager.GetMaps();
-            this.mapOptions.DisplayMemberPath = "Name";
-            this.mapOptions.SelectedValuePath = "Id";
-            this.mapOptions.SelectedIndex = 0;*/
-            //TODO
+            AudioManager.InitTracks();
+            this.AmbianceOptions.ItemsSource = AudioManager.GetAmbiance();
+            this.AmbianceOptions.DisplayMemberPath = "Name";
+            this.AmbianceOptions.SelectedValuePath = "Id";
+            this.AmbianceOptions.SelectedIndex = 0;
         }
 
         private void EditContentTypeDropdownChanged(object sender, RoutedEventArgs e)
@@ -1635,6 +1637,19 @@ namespace TableTopHubApp
             // todo
         }
 
+        private void PlayAmbianceClick(object sender, RoutedEventArgs e)
+        {
+            if(this.AmbianceOptions.SelectedValue != null)
+            {
+                AudioPlayer.PrepAmbianceWorkers(this.AmbianceOptions.SelectedValue.ToString());
+            }
+        }
+
+        private void StopAmbianceClick(object sender, RoutedEventArgs e)
+        {
+            AudioPlayer.StopAmbiance();
+        }
+
         private void EnableOverlayClick(object sender, RoutedEventArgs e)
         {
             if (this.overlayOptions.SelectedValue != null && App.OverlayRunning)
@@ -1694,6 +1709,11 @@ namespace TableTopHubApp
         private void SoundVolumeChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             AudioPlayer.ChangeSoundEffectVolume((int)this.soundVolume.Value);
+        }
+
+        private void AmbianceVolumeChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            AudioPlayer.ChangeAmbianceVolume((int)this.ambianceVolume.Value);
         }
 
         private void CurrentNameChanged(object sender, RoutedEventArgs e)

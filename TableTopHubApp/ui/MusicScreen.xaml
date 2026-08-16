@@ -43,6 +43,12 @@
                 <Setter.Value>Center</Setter.Value>
             </Setter>
         </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="TextAlignment">
+                <Setter.Value>Center</Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -81,7 +87,7 @@
             <Button Grid.Column="5" Grid.Row="1" x:Name="statsScreenButton" Click="ScreenChangeClick" Content="Stats"></Button>
         </Grid>
 
-        <Grid Grid.Row="1" x:Name="mainGrid" IsEnabled="False" Visibility="Hidden">
+        <Grid Grid.Row="1" x:Name="mainGrid" IsEnabled="False" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -109,13 +115,16 @@
                     <RowDefinition Height="2*"></RowDefinition>
                     <RowDefinition Height="3*"></RowDefinition>
                     <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
 
+                <TextBlock Grid.ColumnSpan="2" Text="Music"></TextBlock>
                 <Button Grid.Column="1" Grid.Row="1" x:Name="buttonPlayMusic" Click="PlayMusicClick" Content="Play"></Button>
                 <Button Grid.Column="3" Grid.Row="1" x:Name="buttonStopMusic" Click="StopMusicClick" Content="Stop"></Button>
-            </Grid>
 
-            <Slider Grid.Row="1" Grid.Column="0" Value="50" Minimum="0" Maximum="100" Name="musicVolume" ValueChanged="MusicVolumeChanged"></Slider>
+                <Slider Grid.Row="3" Grid.Column="1" Value="50" Minimum="0" Maximum="100" Name="musicVolume" ValueChanged="MusicVolumeChanged" Grid.ColumnSpan="3"></Slider>
+            </Grid>
 
             <Grid Grid.Row="0" Grid.Column="2">
                 <Grid.ColumnDefinitions>
@@ -234,6 +243,29 @@
 
 
 
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="3*"></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.ColumnSpan="2" Text="Sfx"></TextBlock>
+                <Button Grid.Column="1" Grid.Row="1" x:Name="buttonPlaySound" Click="PlaySoundClick" Content="Play"></Button>
+                <Button Grid.Column="3" Grid.Row="1" x:Name="buttonStopSound" Click="StopSoundClick" Content="Stop"></Button>
+                <Slider Grid.Row="3" Grid.Column="1" Value="50" Minimum="0" Maximum="100" Name="soundVolume" ValueChanged="SoundVolumeChanged" Grid.ColumnSpan="3"></Slider>
+            </Grid>
+
             <Grid Grid.Row="2" Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -247,13 +279,15 @@
                     <RowDefinition Height="2*"></RowDefinition>
                     <RowDefinition Height="3*"></RowDefinition>
                     <RowDefinition Height="2*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Button Grid.Column="1" Grid.Row="1" x:Name="buttonPlaySound" Click="PlaySoundClick" Content="Play"></Button>
-                <Button Grid.Column="3" Grid.Row="1" x:Name="buttonStopSound" Click="StopSoundClick" Content="Stop"></Button>
+                <TextBlock Grid.ColumnSpan="2" Text="Ambiance"></TextBlock>
+                <Button Grid.Column="1" Grid.Row="1" x:Name="buttonPlayAmbiance" Click="PlayAmbianceClick" Content="Play"></Button>
+                <Button Grid.Column="3" Grid.Row="1" x:Name="buttonStopAmbiance" Click="StopAmbianceClick" Content="Stop"></Button>
+                <Slider Grid.Row="3" Grid.Column="1" Value="50" Minimum="0" Maximum="100" Name="ambianceVolume" ValueChanged="AmbianceVolumeChanged" Grid.ColumnSpan="3"></Slider>
             </Grid>
-
-            <Slider Grid.Row="3" Grid.Column="0" Value="50" Minimum="0" Maximum="100" Name="soundVolume" ValueChanged="SoundVolumeChanged"></Slider>
 
             <Grid Grid.Row="0" Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -271,7 +305,7 @@
                 <ComboBox Grid.Row="1" Grid.Column="1" Name="musicOptions" ></ComboBox>
             </Grid>
 
-            <Grid Grid.Row="2" Grid.Column="1">
+            <Grid Grid.Row="1" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
@@ -285,6 +319,22 @@
                 </Grid.ColumnDefinitions>
 
                 <ComboBox Grid.Row="1" Grid.Column="1" Name="soundOptions" ></ComboBox>
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox Grid.Row="1" Grid.Column="1" Name="AmbianceOptions" ></ComboBox>
             </Grid>
         </Grid>
 

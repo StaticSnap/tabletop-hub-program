@@ -1,6 +1,6 @@
 ﻿namespace TableTopHubApp
 {
-    class SoundInfo
+    public class SoundInfo
     {
         public string Id { get; set; }
 

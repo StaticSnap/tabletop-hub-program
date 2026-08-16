@@ -80,22 +80,30 @@
                 <ColumnDefinition Width="20*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="10*"></RowDefinition>
+                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition Height="5*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="10*"></RowDefinition>
+                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition Height="5*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="10*"></RowDefinition>
+                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition Height="5*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <CheckBox Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="loopingCheck"></CheckBox>
+            <CheckBox Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="loopingCheck" Click="LoopingClick"></CheckBox>
+            <TextBlock Grid.Row="4" Text="Loop track" FontSize="7"></TextBlock>
 
-            <CheckBox Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="pitchCheck"></CheckBox>
-
+            <CheckBox Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="pitchCheck" Click="PitchClick"></CheckBox>
+            <TextBlock Grid.Row="7" Text="Vary Pitch" FontSize="7"></TextBlock>
+            
             <Slider Grid.Column="2" x:Name="volumeSlider" Minimum="0" Maximum="100"></Slider>
-
-            <Slider Grid.Column="2" Grid.Row="2" x:Name="frequencySlider" Minimum="0" Maximum="100"></Slider>
-
-            <Slider Grid.Column="2" Grid.Row="4" x:Name="variationSlider" Minimum="0" Maximum="100"></Slider>
+            <TextBlock Grid.Column="2" Grid.Row="1" Text="Volume"></TextBlock>
+            
+            <Slider Grid.Column="2" Grid.Row="3" x:Name="frequencySlider" Minimum="0" Maximum="100"></Slider>
+            <TextBlock Grid.Column="2" Grid.Row="4" Text="Frequency"></TextBlock>
+            
+            <Slider Grid.Column="2" Grid.Row="6" x:Name="variationSlider" Minimum="0" Maximum="100"></Slider>
+            <TextBlock Grid.Column="2" Grid.Row="7" Text="Variance"></TextBlock>
         </Grid>
     </Grid>
 </UserControl>
